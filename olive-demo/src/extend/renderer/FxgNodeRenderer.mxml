@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive" 
+							xmlns:fxg="assets.fxg.*">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.utils.UIUtils;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalAlign;
+			
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:FxgNodeRenderer = new FxgNodeRenderer();
+				copyProperties(renderer);
+				return renderer;
+			}
+			
+		]]>
+	</fx:Script>
+	<olive:layout>
+		<s:BasicLayout/>
+	</olive:layout>
+	<fxg:a79 width="40" height="25"/>
+	<s:Label text="{node.text}" horizontalCenter="0" verticalCenter="0"/>
+</olive:AbstractNodeRenderer>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+扩展渲染器基类，实现带告警ToolTip的渲染器
+可根据需要去掉不需要功能
+-->
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								xmlns:s="library://ns.adobe.com/flex/spark" 
+								xmlns:mx="library://ns.adobe.com/flex/mx"
+								xmlns:olive="Library://com.olive.core/flex/olive"
+								creationComplete="init(event)">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.utils.UIUtils;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalAlign;
+			/**
+			 * Label位置枚举: left
+			 */ 
+			public static const POSITION_LEFT : String = "left";
+			
+			/**
+			 * Label位置枚举: right
+			 */ 
+			public static const POSITION_RIGHT : String = "right";
+			
+			/**
+			 * Label位置枚举: top
+			 */ 
+			public static const POSITION_TOP : String = "top";
+			
+			/**
+			 * Label位置枚举: bottom 默认值
+			 */ 
+			public static const POSTTION_BOTTOM : String = "bottom";
+			
+			/**
+			 * 设置是否显示告警圆点
+			 */ 
+			[Bindable]
+			public var showAlarmMarker:Boolean = true;
+			
+			/**
+			 * 是否显示Label
+			 */ 
+			[Bindable]
+			public var showLabel:Boolean = true;
+			
+			[Bindable]
+			public var alarm_Color:uint = 0x00FF00;
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:AlarmNodeRenderer = new AlarmNodeRenderer();
+				copyProperties(renderer);
+				renderer.showAlarmMarker = showAlarmMarker;
+				renderer.showLabel = showLabel;
+				return renderer;
+			}
+			
+			/**
+			 * 重写data方法，根据告警级别渲染不同颜色
+			 */ 
+			override public function set data(value:Object):void{
+				super.data = value;
+				if(value is GroupedNode){
+					showAlarmMarker = false;
+					return ;
+				}
+				if(lab){
+					labelChanger();
+				}
+				refreshUI();
+			}
+			
+			/**
+			 * 使UI根据模型进行绘制
+			 */ 
+			private function refreshUI():void{
+				if(alarm_lab){
+					alarm_lab.text = node.data.alarm_num;
+				}
+				switch(node.data.alarm_level){
+					case 1:	
+						alarm_Color = 0x0000FF;//1级告警蓝色
+						break;
+					case 2:
+						alarm_Color = 0xFFFF00;//2级告警黄色
+						break;
+					case 3:
+						alarm_Color = 0xFF0000;//三级告警红色
+						break;
+					default:
+						alarm_Color = 0x00FF00;//0级告警绿色
+						//showAlarmMarker = false; //或者不显示告警提示
+						break;
+				}
+			}
+			
+			/**
+			 * 根据Data强制刷新Ui内部构造
+			 */ 
+			override public function refreshUiFormData():void{
+				refreshUI();
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				labelChanger();
+			}
+			
+			/**
+			 * Label的摆放位置，如无必要，可去掉此方法
+			 */ 
+			private function labelChanger():void{
+				if(showLabel && node.data 
+					&& node.data.hasOwnProperty("labelposition")){
+					var position:String = node.data["labelposition"];
+					switch(position)
+					{
+						case POSITION_LEFT:
+						{
+							var hor:HorizontalLayout = new HorizontalLayout();
+							hor.gap = 0;
+							hor.verticalAlign = VerticalAlign.MIDDLE;
+							this.layout = hor;
+							setElementIndex(lab,0);
+							break;
+						}
+						case POSITION_RIGHT:
+						{
+							var layout:HorizontalLayout = new HorizontalLayout();
+							layout.gap = 0;
+							layout.verticalAlign = VerticalAlign.MIDDLE;
+							this.layout = layout;
+							setElementIndex(lab,1);
+							break;
+						}
+						case POSITION_TOP:
+						{
+							var topL:VerticalLayout = new VerticalLayout();
+							topL.horizontalAlign = HorizontalAlign.CENTER;
+							this.layout = topL;
+							setElementIndex(lab,0);
+							break;
+						}
+							
+						default:
+						{
+							var l:VerticalLayout = new VerticalLayout();
+							l.horizontalAlign = HorizontalAlign.CENTER;
+							this.layout = l;
+							setElementIndex(lab,1);
+							break;
+						}
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	<olive:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</olive:layout>
+	<s:Group id="content">
+		<s:Image id="img" source="{data.data.icon}" x="10" y="10"/>
+		<s:Group id="alarmMarker" width="25" height="25" y="-10" x="{img.width/2}" visible="{showAlarmMarker}" includeInLayout="{showAlarmMarker}">
+			<s:Path left="0" right="0" top="0" bottom="0" data="M 0 0 H 20 V 15 L 15 15 L 10 20 L 8 15 L 0 15 L 0 0 Z">
+				<s:fill>
+					<s:LinearGradient rotation="45">
+						<s:GradientEntry color="0xFFFFFF"/>
+						<s:GradientEntry color="{alarm_Color}"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Path>
+			<s:Label id="alarm_lab" horizontalCenter="0" verticalCenter="0" text="{node.data.alarm_num}"/>
+		</s:Group>
+	</s:Group>
+	<s:Label id="lab" text="{data.text}" fontSize="12" visible="{showLabel}" includeInLayout="{showLabel}"/>
+</olive:AbstractNodeRenderer>

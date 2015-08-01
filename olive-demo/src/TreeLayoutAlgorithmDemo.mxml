@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+布局算法之树形布局示例
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()" pageTitle="树形布局示例"
+			   viewSourceURL="srcview/index.html">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.consts.AlgorithmsTypeConst;
+			import com.iolive.topology.events.GraphNodeEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.renderer.FxgNodeRenderer;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/StarLayoutAlgorithmDemo.xml";
+				graph.model = model;
+				graph.ignoreBounds = false;//是否在布局时自动滚动条以更多的视域呈现节点
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayoutByName(AlgorithmsTypeConst.VerticalTreeLayoutAlgorithm);
+					});
+				
+			}
+			
+			private function runLayout(layoutName:String):void{
+				graph.runLayoutByName(layoutName);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<s:SkinnableContainer width="100%" skinClass="skins.control.DefaultControlBarSkin">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="center"/>
+			</s:layout>
+			<s:CheckBox change="{graph.ignoreBounds = ignoreBoundsCheck.selected;graph.runLayout()}" id="ignoreBoundsCheck" label="视域扩展"/>
+			<s:Button label="上" click="runLayout(AlgorithmsTypeConst.VerticalTreeLayoutAlgorithm)"/>
+			<s:Button label="下" click="runLayout(AlgorithmsTypeConst.VerticalTreeLayoutBottomAlgorithm)"/>
+			<s:Button label="左" click="runLayout(AlgorithmsTypeConst.HorizontalTreeLayoutAlgorithm)"/>
+			<s:Button label="右" click="runLayout(AlgorithmsTypeConst.HorizontalTreeLayoutRightAlgorithm)"/>
+			<s:Button label="目录树" click="runLayout(AlgorithmsTypeConst.IndentedTreeLayoutAlgorithm)"/>
+		</s:SkinnableContainer>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new FxgNodeRenderer()}"/>
+	</s:VGroup>
+</s:Application>

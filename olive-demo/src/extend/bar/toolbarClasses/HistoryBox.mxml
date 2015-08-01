@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:ui="extend.bar.*" implements="com.iolive.topology.controls.IControl" xmlns:toolbarClasses="designs.bar.toolbarClasses.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.ControlNames;
+			import com.iolive.topology.consts.EmbedIcons;
+			import com.iolive.topology.events.GraphLayoutEvent;
+			import com.iolive.topology.events.GraphSelectionModeChangedEvent;
+			import com.iolive.topology.events.NavigationEvent;
+			import com.iolive.topology.utils.MoveManager;
+			import com.iolive.topology.utils.NavigationManager;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+			import spark.components.ButtonBarButton;
+			import spark.events.IndexChangeEvent;
+
+			
+			[Bindable]
+			private var igraph:IGraph;
+			[Bindbale]
+			private var navMgr:NavigationManager;
+		 
+			/**
+			 * 必设属性
+			 * @param graph 画布属性
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.igraph = value;
+				this.navMgr = value.navigationManager;
+				navMgr.addEventListener(NavigationEvent.NAVIGATION_EVENT, navigationEvent);
+				graph.addEventListener(GraphLayoutEvent.GRAPH_LAYOUT_STARTING, layoutStarting);
+				graph.addEventListener(GraphLayoutEvent.GRAPH_LAYOUT_FINISHED, layoutFinished);
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.igraph;
+			}
+			
+			private function navigationEvent(event:NavigationEvent):void {
+				backButton.enabled = event.backEnabled;
+				forwardButton.enabled = event.forwardEnabled;
+			}
+			
+			private function layoutStarting(event:GraphLayoutEvent):void {
+				backButton.enabled = false;
+				forwardButton.enabled = false;
+			}
+			
+			private function layoutFinished(event:GraphLayoutEvent):void {
+				backButton.enabled = navMgr.backEnabled;
+				forwardButton.enabled = navMgr.forwardEnabled;
+			}
+			
+			private function navItemClicked(index:int):void {
+				if (index == 0) {
+					navMgr.back();
+				} else if (index == 1) {
+					navMgr.forward();
+				}
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.HISTORY;
+			}
+		]]>
+	</fx:Script>
+	<ui:MetroButton id="backButton" toolTip="后退" icon="@Embed(source='assets/wp8/pic_01.png')" click="navItemClicked(0)"/>
+	<ui:MetroButton id="forwardButton" toolTip="前进" icon="@Embed(source='assets/wp8/pic_02.png')" click="navItemClicked(1)"/>
+</s:HGroup>

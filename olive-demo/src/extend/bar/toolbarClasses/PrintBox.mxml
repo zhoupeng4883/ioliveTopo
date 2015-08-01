@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" implements="com.iolive.topology.controls.IControl" 
+		 xmlns:ui="extend.bar.*" gap="4">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.ControlNames;
+			
+			import mx.core.UIComponent;
+			import mx.graphics.codec.PNGEncoder;
+			
+			private var igraph:IGraph;
+			
+			/**
+			 * 连接打印机进行打印
+			 */ 
+			protected function printHandler(event:MouseEvent):void
+			{
+				var pj:PrintJob = new PrintJob();    
+				pj.start();
+				pj.addPage(igraph as Sprite);    
+				pj.send();
+			}
+			
+			/**
+			 * 必设属性
+			 * @param graph 画布属性
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.igraph = value;
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.igraph;
+			}
+			
+			/**　导出图片　**/
+			private var file:FileReference = new FileReference(); 
+			private var m_pictureBitmapData:BitmapData;
+			[Bindable]
+			private var m_pictureBitmap:Bitmap;
+			
+			/**
+			 * 导出图片，后期扩展可导出png、jpg多种格式
+			 */ 
+			private function exportImg():void{
+				m_pictureBitmapData = new BitmapData(igraph.width,igraph.height);
+				m_pictureBitmapData.draw(igraph as IBitmapDrawable,new Matrix());                
+				m_pictureBitmap = new Bitmap(m_pictureBitmapData);
+				var png:mx.graphics.codec.PNGEncoder = new mx.graphics.codec.PNGEncoder();
+				//	var jpg:JPEGEncoder = new JPEGEncoder();
+				var ba:ByteArray = png.encode(m_pictureBitmapData);
+				file.save(ba,'export.png');
+				
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.PRINT;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<ui:MetroButton toolTip="打印" icon="@Embed(source='assets/wp8/pic_27.png')"  click="exportImg()"/>
+	<ui:MetroButton toolTip="导出" icon="@Embed(source='assets/wp8/pic_28.png')" click="printHandler(event)"/>
+</s:VGroup>

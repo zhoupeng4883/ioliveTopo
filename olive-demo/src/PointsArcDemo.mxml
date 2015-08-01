@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+给定折点的线段绘制
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			import com.iolive.topology.renderers.PointsDatasArcRenderer;
+			import com.iolive.topology.utils.Utils;
+			import com.iolive.topology.utils.Uuid;
+			
+			import extend.renderer.AlarmNodeRenderer;
+			
+			import flash.utils.setInterval;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				graph.model = model;
+				initData();
+			}
+			
+			public function initData():void{
+				var node1:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"","A");
+				node1.layoutX = 500;
+				node1.layoutY = 200;
+				model.addNode(node1);
+				var node2:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"","B");
+				node2.layoutX = 500;
+				node2.layoutY = 600;
+				model.addNode(node2);
+				for(var i:int = 0; i <= 21; i ++){
+					var arc:DefaultGraphArc = new DefaultGraphArc(new Uuid().toString(),node1,node2,"arc"+i);
+					var p1:Point;
+					var p2:Point;
+					if(i%2==0){
+						p1 = new Point(500-i*10,300);
+						p2 = new Point(500-i*10,500);
+					}else{
+						p1 = new Point(500+i*10,300);
+						p2 = new Point(500+i*10,500);
+					}
+					arc.data = {points:[new Point(node1.x,node1.y),p1,p2,new Point(node2.x,node2.y)]};
+					model.addArc(arc);
+				}
+			}
+			 
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Declarations>
+		<olive:PointsDatasArcRenderer controlEnabled="false" id="pointsArcRenderer"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%" id="bar"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" arcRenderer="{pointsArcRenderer}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	为画布设置背景的例子
+	如: graph.setBackgroundImag("assets/background/_bg1.png",BitmapFillMode.SCALE);
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="为画布设置背景样式的例子"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.consts.EmbedIcons;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.StyleManagerWindow;
+			
+			import mx.managers.PopUpManager;
+			
+			import sample.SimpleXmlGraphModel;
+			
+			import spark.components.Button;
+			private var model:SimpleXmlGraphModel;
+			[Bindable]
+			[Embed(source="/assets/light.png")]
+			private var light:Class;
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/IconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+				
+				var styleBtn:Button = new Button();
+				styleBtn.setStyle("icon",light);
+				styleBtn.width = 24;
+				styleBtn.height = 24;
+				toolbar.addElement(styleBtn);
+				styleBtn.addEventListener(MouseEvent.CLICK,showStyleWindow);
+				win = new StyleManagerWindow();
+				win.graph = this.graph;
+				PopUpManager.addPopUp(win,this);
+				PopUpManager.centerPopUp(win);
+			}
+			
+			private var win:StyleManagerWindow;
+			private function showStyleWindow(event:MouseEvent):void{
+				if(win){
+					win.visible = !win.visible;
+				} 
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%" id="toolbar"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new ImageNodeRenderer('icon')}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

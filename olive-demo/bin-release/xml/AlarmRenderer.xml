@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<graph>
+  <node id="1" text="云" tooltip="云" type="入口"  icon="assets/topo/cloud.gif" alarm_level="2" alarm_num="3" labelposition="top"/>
+  <node id="2" text="internet网关" tooltip="internet网关" type="入口"  icon="assets/topo/internet.png" alarm_level="2"  alarm_num="3" labelposition="left"/>
+  <node id="3" text="卫星电话发射器" tooltip="卫星电话发射器" type="入口"  icon="assets/topo/satelite.png" alarm_level="2"  alarm_num="2" labelposition="right"/>
+  <node id="4" text="无线路由" tooltip="无线路由" type="入口"  icon="assets/topo/wireless.png" alarm_level="0"  alarm_num="5" />
+  <node id="5" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="2"  alarm_num="1"/>
+  <node id="6" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"  alarm_level="3" alarm_num="10"/>
+  <node id="7" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="1" alarm_num="1"/>
+  <node id="8" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="1" alarm_num="1"/>
+  <node id="9" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="1" alarm_num="1"/>
+  <node id="10" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="1" alarm_num="1"/>
+  <node id="11" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="2" alarm_num="3" />
+  <node id="12" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="1" alarm_num="2" />
+  <node id="13" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="3" alarm_num="9" />
+  <node id="14" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="3" alarm_num="12"/>
+  <node id="15" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="3" alarm_num="7"/>
+  <node id="16" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="2" alarm_num="4"/>
+  <node id="17" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="2" alarm_num="3"/>
+  <node id="18" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="3" alarm_num="8"/>
+  <node id="19" text="文件服务器" tooltip="文件服务器" type="服务器"  icon="assets/topo/IBM-Server.png" alarm_level="0" alarm_num="3" />
+  <node id="20" text="数据库服务器" tooltip="数据库服务器" type="服务器"  icon="assets/topo/database.png" alarm_level="0" alarm_num="3" />
+  <arc id="100" type="连接" tooltip="" source="1" destination="2" selected="true" directed="false" lineType="straightline" flowTextFeild="1"  alarm_num="3" />
+  <arc id="101" type="连接" tooltip="" source="1" destination="3" lineType="CIRCULAR"  flowTextFeild="2" color="0x121212" dataFlow="true"  />
+  <arc id="102" type="线路" tooltip="" source="2" destination="4" lineType="DirectedBalloon"  flowTextFeild="3"   />
+  <arc id="103" type="线路" tooltip="" source="2" destination="5" lineType="BROKEN_1"  flowTextFeild="4"   />
+  <arc id="104" type="线路" tooltip="" source="2" destination="6" lineType="BROKEN_1"  flowTextFeild="5"   dataFlow="true"  />
+  <arc id="105" type="线路" tooltip="" source="2" destination="7" lineType="BROKEN_1"  flowTextFeild="6"   />
+  <arc id="106" type="干线1" tooltip="" source="2" destination="8" lineType="BROKEN_1"  flowTextFeild="7"   />
+  <arc id="107" type="线路" tooltip="" source="2" destination="9" lineType="QUAD_CURVE"  flowTextFeild="8"  dataFlow="true"  />
+  <arc id="108" type="省道干线" tooltip="" source="2" destination="10" lineType="BROKEN_1"  flowTextFeild="9"   />
+  <arc id="109" type="线路" tooltip="" source="3" destination="16" lineType="BROKEN_1"  flowTextFeild="10"   />
+  <arc id="110" type="线路" tooltip="" source="3" destination="17" lineType="CIRCULAR"  flowTextFeild="11"   />
+  <arc id="111" type="线路" tooltip="" source="3" destination="18" lineType="BROKEN_1"  flowTextFeild="111"   />
+  <arc id="112" type="线路" tooltip="" source="4" destination="11" lineType="BROKEN_2"  flowTextFeild="1112"   />
+  <arc id="113" type="线路" tooltip="" source="4" destination="12" lineType="QUAD_CURVE"  flowTextFeild="213"   />
+  <arc id="114" type="线路" tooltip="" source="4" destination="13" lineType="BROKEN_2"  flowTextFeild="32"   dataFlow="true"  />
+  <arc id="115" type="线路" tooltip="" source="4" destination="14" lineType="BROKEN_2"  flowTextFeild="43"   />
+  <arc id="116" type="线路" tooltip="" source="4" destination="15" lineType="QUAD_CURVE"  flowTextFeild="123"   />
+  <arc id="117" type="线路" tooltip="" source="2" destination="19" lineType="BROKEN_1"  flowTextFeild="313213213"/>
+  <arc id="118" type="线路" tooltip="" source="2" destination="20" lineType="BROKEN_1"  flowTextFeild="3123"   />
+</graph>

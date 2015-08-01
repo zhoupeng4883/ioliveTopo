@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%" borderColor="0x8EA3BE" xmlns:extend="extend.*">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.renderers.AbstractArcRenderer;
+			import com.iolive.topology.renderers.IArcRenderer;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.SimpleArrowHead4EndpointArcRenderer;
+			import com.iolive.topology.renderers.SimpleArrowHeadArcRenderer;
+			import com.iolive.topology.renderers.SimpleBrokenLineRenderer;
+			import com.iolive.topology.renderers.SimpleCircleMarkArcRenderer;
+			import com.iolive.topology.renderers.SimpleDoubleArrowHeadArcRenderer;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			
+			import extend.renderer.WaterLineArcRenderer;
+			import extend.renderer.arc.LightningArcRenderer;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ColorPickerEvent;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			private var _graph:IGraph;
+			
+			[Bindable]
+			public function get model():DesignGraphModel
+			{
+				return _model;
+			}
+
+			public function set model(value:DesignGraphModel):void
+			{
+				_model = value;
+			}
+
+			public function set graph(value:IGraph):void{
+				this._graph = value;
+			}
+			
+			public function get graph():IGraph{
+				return this._graph;
+			}
+			
+			private var _model:DesignGraphModel;
+			
+			protected function lineTypeBar_changeHandler(event:IndexChangeEvent):void
+			{
+				
+					var arcs:Array = graph.model.arcs;
+					if(!lineTypeBar.selectedItem)return;
+					/* for each(var arc:IGraphArc in arcs) {
+						arc.lineType=lineTypeBar.selectedItem.data;
+					} */
+					model.marcType=lineTypeBar.selectedItem.data;
+				
+			}
+			
+			
+			/**
+			 * 节点配置发生更改时
+			 */ 
+			protected function nodeChanger():void{
+				var nodes:Array = model.nodes;
+				var show:Boolean = labelShow.selected;
+				var labelposition:String = labelpositionList.selectedItem.data;
+				for(var i:int = 0, size:int = nodes.length; i < size; i ++){
+					if(nodes[i] is GroupedNode) continue;
+					nodes[i].data['showLabel'] = show;
+					nodes[i].data['labelposition'] = labelposition;
+					nodes[i].data['dropShadow'] = nodeDropShadowCheckBox.selected;
+					graph.repaintNode(nodes[i]);
+				}
+				model.nodeProperties = {showLabel:show,labelPosition:labelposition};
+			}
+			
+			/**
+			 * 调整节点标签的Style
+			 */ 
+			protected function labelStyleChanger():void{
+				var topLevelStyleManager:IStyleManager2 = FlexGlobals.topLevelApplication.styleManager;
+				var labelStyle:CSSStyleDeclaration = topLevelStyleManager.getStyleDeclaration(".compositeRendererLabel");
+				labelStyle.setStyle("color",labelColorPicker.selectedColor);
+				labelStyle.setStyle("fontSize",labelFontSizeNs.value);	
+				labelStyle.setStyle("fontWeight",fontWeightDownList.selectedItem.data);
+				topLevelStyleManager.setStyleDeclaration(".compositeRendererLabel", labelStyle, true);
+			}
+			
+
+			protected function colorpicker1_changeHandler(event:ColorPickerEvent):void
+			{
+				
+				var arcs:Array = graph.model.arcs;
+				for each(var arc:IGraphArc in arcs) {
+					arc.color=arcColorPicker.selectedColor;
+				}
+				model.mcolor=arcColorPicker.selectedColor;
+			}
+			
+			protected function lineThicknessNumeric_changeHandler(event:Event):void
+			{
+				var arcs:Array = graph.model.arcs;
+				for each(var arc:IGraphArc in arcs) {
+					arc.weight=lineThicknessNumeric.value;
+				}
+				model.mweight=lineThicknessNumeric.value;
+			}
+			
+			protected function checkbox1_changeHandler(event:Event):void
+			{
+				var colorProvider:IColorProvider = graph.arcRenderer.colorProvider;
+				colorProvider.setLineStyleForArcType("虚线", "dashed");
+				colorProvider.setLineStyleForArcType("实线", "solid");
+				
+				var arcs:Array = graph.model.arcs;
+				if(dashedCheck.selected){
+					var arc:IGraphArc;
+					for each(arc in arcs) {
+						arc.type="虚线";
+					}
+					model.mType="虚线";
+				}else{
+					for each(arc in arcs) {
+						arc.type="实线";
+					}
+					model.mType="实线";
+				}
+				
+			}
+			
+			protected function arcRenderer_changeHandler(event:IndexChangeEvent):void
+			{
+				var arcRenderer:IArcRenderer;
+				if(arcRendererBar.selectedItem.data=="SimpleBrokenLineRenderer"){
+					arcRenderer=new SimpleBrokenLineRenderer();
+				}else if(arcRendererBar.selectedItem.data=="SimpleArrowHead4EndpointArcRenderer"){
+					arcRenderer=new SimpleArrowHead4EndpointArcRenderer();
+				}else if(arcRendererBar.selectedItem.data=="SimpleArrowHeadArcRenderer"){
+					arcRenderer=new SimpleArrowHeadArcRenderer();
+				}else if(arcRendererBar.selectedItem.data=="SimpleCircleMarkArcRenderer"){
+					arcRenderer=new SimpleCircleMarkArcRenderer();
+				}else if(arcRendererBar.selectedItem.data=="SimpleDoubleArrowHeadArcRenderer"){
+					arcRenderer=new SimpleDoubleArrowHeadArcRenderer();
+				}else if(arcRendererBar.selectedItem.data=="LightningArcRenderer"){
+					arcRenderer=new LightningArcRenderer();
+				}else if(arcRendererBar.selectedItem.data=="WaterLineArcRenderer"){
+					arcRenderer=new WaterLineArcRenderer();
+				}else{
+					arcRenderer=new AbstractArcRenderer();
+				}
+				arcRenderer.colorProvider=graph.arcRenderer.colorProvider;
+				graph.arcRenderer=arcRenderer;
+				graph.reconstructionArcs();
+				
+			}
+			
+			protected function showArcLabel_changeHandler(event:Event):void
+			{
+				_graph.showArcLabels=showArcLabel.selected;
+			}
+			
+			protected function arcLabelRotation_changeHandler(event:Event):void
+			{
+				_graph.lineLableAngle=arcLabelRotation.value;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<s:BorderContainer backgroundColor="0xCEDDF5" width="100%" height="25" borderVisible="false">
+		<s:Label text="画布控制" fontWeight="bold" verticalCenter="0"  x="10"/>
+	</s:BorderContainer>
+	<extend:GraphBackgroundStyleView graph="{_graph}"/>
+	<s:Spacer height="10"/>
+	<s:BorderContainer backgroundColor="0xCEDDF5" width="100%" height="25" borderVisible="false">
+		<s:Label text="节点控制" fontWeight="bold" verticalCenter="0"  x="10"/>
+	</s:BorderContainer>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="允许编辑" width="100"/>
+		<s:CheckBox id="nodeResizeCheckBox" change="{graph.nodeResizeEnabled = nodeResizeCheckBox.selected}"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="投影效果" width="100"/>
+		<s:CheckBox id="nodeDropShadowCheckBox" change="nodeChanger()" selected="true"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="允许拖拽" width="100"/>
+		<s:CheckBox id="nodeDragCheckBox" change="{graph.nodeDragEnabled = nodeDragCheckBox.selected}" selected="true"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="显示标签" width="100"/>
+		<s:CheckBox id="labelShow" change="nodeChanger()" selected="true"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="标签位置" width="100"/>
+		<s:DropDownList selectedIndex="0" width="120" id="labelpositionList" change="nodeChanger()">
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:Object label="中" data="center"/>
+					<fx:Object label="上" data="top"/>
+					<fx:Object label="下" data="bottom"/>
+					<fx:Object label="左" data="left"/>
+					<fx:Object label="右" data="right"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:DropDownList>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="字体大小" width="100"/>
+		<s:NumericStepper id="labelFontSizeNs" value="14" minimum="10" maximum="30"  stepSize="1" change="labelStyleChanger()" width="120"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="字体颜色" width="100"/>
+		<mx:ColorPicker selectedColor="0xFFFFFF" id="labelColorPicker" change="labelStyleChanger()" width="120"/>
+	</s:HGroup>	
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="是否加粗" width="100"/>
+		<s:DropDownList id="fontWeightDownList" selectedIndex="1" width="120" change="labelStyleChanger()">
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:Object label="正常" data="normal"/>
+					<fx:Object label="加粗" data="bold"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:DropDownList>
+	</s:HGroup>	
+	<s:Spacer height="10"/>
+	<s:BorderContainer backgroundColor="0xCEDDF5" width="100%" height="25" borderVisible="false">
+		<s:Label text="线段控制" fontWeight="bold" verticalCenter="0"  x="10"/>
+	</s:BorderContainer>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="线段颜色" width="100"/>
+		<mx:ColorPicker id="arcColorPicker" width="120"  change="colorpicker1_changeHandler(event)"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="线段粗细" width="100"/>
+		<s:NumericStepper minimum="1" maximum="10" change="lineThicknessNumeric_changeHandler(event)"  stepSize="1" value="1"  id="lineThicknessNumeric" width="120"/>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="是否虚线" width="100"/>
+		<s:CheckBox id="dashedCheck" change="checkbox1_changeHandler(event)" />
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="显示线段标签" width="100"/>
+		<s:CheckBox id="showArcLabel" change="showArcLabel_changeHandler(event)" />
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="线段标签倾斜" width="100"/>
+		<s:NumericStepper id="arcLabelRotation" value="0" stepSize="0.01" minimum="{-3.15}" maximum="{3.15}"  change="arcLabelRotation_changeHandler(event)" width="120"/>
+	</s:HGroup>
+	
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+		<s:Label text="线渲染器" width="100"/>
+		<s:DropDownList id="arcRendererBar" selectedIndex="0" change="arcRenderer_changeHandler(event)" labelField="data"  width="120">
+			<s:dataProvider>
+				<s:ArrayList>	
+					<fx:Object icon="@Embed(source='assets/topo/Default.png')" over_icon="@Embed(source='assets/topo/Default_over.png')" data="AbstractArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Default.png')" over_icon="@Embed(source='assets/topo/Default_over.png')" data="SimpleBrokenLineRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/EdgeDrawer.png')" over_icon="@Embed(source='assets/topo/EdgeDrawer_over.png')" data="SimpleArrowHead4EndpointArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Orthogonal.png')" over_icon="@Embed(source='assets/topo/Orthogonal_over.png')" data="SimpleArrowHeadArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Bezier.png')" over_icon="@Embed(source='assets/topo/Bezier_over.png')" data="SimpleCircleMarkArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Circular.png')" over_icon="@Embed(source='assets/topo/Circular_over.png')" data="SimpleDoubleArrowHeadArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Default.png')" over_icon="@Embed(source='assets/topo/Circular_over.png')" data="LightningArcRenderer"/>
+					<fx:Object icon="@Embed(source='assets/topo/Default.png')" over_icon="@Embed(source='assets/topo/Circular_over.png')" data="WaterLineArcRenderer"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:DropDownList>
+	</s:HGroup>
+	<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10" >
+		<s:Label text="线类型" width="100"/>
+		<s:ButtonBar id="lineTypeBar" skinClass="skins.buttonbar.IconBarButtonSkin" selectedIndex="0"  change="lineTypeBar_changeHandler(event)" toolTip="{lineTypeBar.selectedItem.data}">
+			<s:dataProvider>
+				<s:ArrayList>
+					<fx:Object icon="@Embed(source='assets/topo/Default.png')" over_icon="@Embed(source='assets/topo/Default_over.png')" data="straightline"/>
+					<fx:Object icon="@Embed(source='assets/topo/bk2.png')" over_icon="@Embed(source='assets/topo/bk2_over.png')" data="BROKEN_1"/>
+					<fx:Object icon="@Embed(source='assets/topo/EdgeDrawer.png')" over_icon="@Embed(source='assets/topo/EdgeDrawer_over.png')" data="BROKEN_2"/>
+					<fx:Object icon="@Embed(source='assets/topo/arc.png')" over_icon="@Embed(source='assets/topo/arc_over.png')" data="QUAD_CURVE"/>
+					<fx:Object icon="@Embed(source='assets/topo/Circular.png')" over_icon="@Embed(source='assets/topo/Circular_over.png')" data="CIRCULAR"/>
+					<fx:Object icon="@Embed(source='assets/topo/Flow.png')" over_icon="@Embed(source='assets/topo/Flow_over.png')" data="DirectedBalloon"/>
+				</s:ArrayList>
+			</s:dataProvider>
+		</s:ButtonBar>
+	</s:HGroup>
+</s:BorderContainer>

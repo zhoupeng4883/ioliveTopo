@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+导入导出XML的示例程序:
+使用封装API ExportUtil中静态方法处理画布的导入导出
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="图片渲染器示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import flash.net.navigateToURL;
+			
+			import mx.managers.PopUpManager;
+			
+			import extend.ExpImpXMLWindow;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private var win:ExpImpXMLWindow;
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/IconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+			}
+			
+			/**
+			 * 弹出导出XML对话框，
+			 */ 
+			protected function showExpWindow():void{
+				win = new ExpImpXMLWindow();
+				win.graph = this.graph;
+				PopUpManager.addPopUp(win,this);
+				PopUpManager.centerPopUp(win);
+			}
+			
+			/**
+			 * 点击下载示例XML
+			 */ 
+			protected function downSampleXML(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("xml/jiaoHuanji.xml"),"_blank");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<s:SkinnableContainer width="100%" skinClass="skins.control.DefaultControlBarSkin">
+			<s:Button icon="@Embed(source='assets/topo/xml.png')" click="showExpWindow()" toolTip="导入|导出XML" width="24" height="22"/>
+			<s:Label mouseChildren="false" color="blue" textDecoration="underline" text="点击下载示例XML" click="downSampleXML(event)"/>
+		</s:SkinnableContainer>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new ImageNodeRenderer('icon')}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

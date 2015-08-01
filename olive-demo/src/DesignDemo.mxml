@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   xmlns:designs="designs.*"
+			   backgroundColor="#EFEFEF" pageTitle="设计器" viewSourceURL="srcview/index.html">
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		@namespace designs "designs.*";
+		@namespace renderers "com.iolive.topology.renderers.*";
+		designs|CompositeRenderer{
+			normalBackgroundAlpha :0;
+			normalBorderAlpha:0;
+			overBackgroundAlpha:0;
+			selectedBackgroundAlpha:0;
+			overBorderThickness:1;
+			selectedBorderAlpha:0.5;
+		}
+		.compositeRendererLabel{
+			fontSize:14;
+			color:#FFFFFF;
+			fontWeight:bold;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<designs:DesignGraphModel id="model"/>
+		<designs:DesignHelper graph="{graph}" model="{model}"/>
+		<designs:CompositeRenderer id="nodeRenderer"/>
+	<!--	<olive:SimpleRectGroupedRenderer id="groupRenderer" autoResize="false"/>-->
+		<designs:IncludeClass/>
+	</fx:Declarations>
+	<s:HGroup width="100%" height="100%" gap="0">
+		<designs:LeftView width="280"/>
+		<s:VGroup width="100%" height="100%" gap="0">
+			<designs:TopView graph="{graph}"/>
+			<olive:OliveGraph id="graph" height="100%" width="100%" model="{model}"
+							  nodeRenderer="{nodeRenderer}"  showDefaultNodeRightMenu="false"/>
+		</s:VGroup>
+		<designs:RightView width="280" graph="{graph}" model="{model}" />
+	</s:HGroup>
+</s:Application>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+节点分组的Demo;
+不指定Graph的groupNodeRenderer属性时，默认创建SimpleRectGroupedRenderer的实例;
+在分组容器上双击时默认删除(拆开)此分组容器;如果不需要此项，请将graph的nodeDoubleClickUnGroup设置为false;
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="节点分组示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive" 
+			   xmlns:renderer="extend.renderer.*">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.events.GraphLayoutEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import mx.collections.ArrayCollection;
+			
+			import sample.SimpleXmlGraphModel;
+			
+			
+			private function init():void {
+				createData(graph1,"xml/OuterGroupRendererDemo.xml");
+				createData(graph2,"xml/OuterGroupRendererDemo.xml");
+				createData(graph3,"xml/OuterGroupRendererDemo.xml");
+				createData(graph4,"xml/ImageGroupRendererDemo.xml");
+				
+			}
+			
+		private function createData(graph:IGraph,fileUrl:String):void{
+			var model:SimpleXmlGraphModel = new SimpleXmlGraphModel();
+			model.url = fileUrl;
+			graph.model = model;
+			model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+				function(event:GraphXMLModelEvent):void{
+					var xmlObject:Object = event.xmlObject;
+					var groups:* = xmlObject.graph.group;
+					for each(var g:Object in groups){
+						var nodeIds:Array = String(g.nodes).split(",");
+						var nodes:Array = [];
+						for each(var id:String in nodeIds){
+							var node:IGraphNode = model.getNode(id);
+							if(node)nodes.push(node);
+						}
+						var bounds:Array = String(g.bounds).split(",");
+						if(graph.groupNodeRenderer.autoResize) graph.groupNodes(nodes,g.text,g.type);
+						else graph.groupNodes(nodes,g.text,g.type,false,new Rectangle(bounds[0],bounds[1],bounds[2],bounds[3]));
+					}
+					//graph.selectedNode = model.getNode("1");
+					graph.selectedNode = model.getNode("3");
+				}); 
+		}
+			
+			 
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		olive|SimpleRectGroupedRenderer{/** default Grouped Node Renderer*/
+			backgroundAlphas:0.1,0.1;
+			backgroundColors:#EE00FF,#EFEFEF;
+			borderColor:#0000FF;
+			borderAlpha:0.6;
+			borderStyle: dash;/*solid(实线)、none(无线)、dash(虚线)、hatch(毛线)*/
+			borderThickness:2;
+			titleLabelStyle:"groupLabelStyle";
+		}
+		olive|SimpleEllipseGroupedRenderer{
+			backgroundAlphas:0.1,0.1;
+			backgroundColors:#EE00FF,#EFEFEF;
+			borderColor:#0000FF;
+			borderAlpha:0.6;
+			borderStyle: hatch;/*solid(实线)、none(无线)、dash(虚线)、hatch(毛线)*/
+			borderThickness:2;
+			titleLabelStyle:"groupLabelStyle";
+		}
+		.groupLabelStyle{
+			fontFamily:"微软雅黑";
+			fontSize:15;
+			fontWeight:bold;
+			color:#000000;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<olive:SimpleRectGroupedRenderer id="groupRenderer1"/>
+		<renderer:BoxGroupRenderer id="groupRenderer2" autoResize="false"/>
+		<olive:SimpleEllipseGroupedRenderer id="groupRenderer3" autoResize="true"/>
+		<renderer:ImageGroupNodeRenderer id="groupRenderer4" autoResize="false"/>
+		<olive:ImageNodeRenderer id="nodeRenderer"/>
+	</fx:Declarations>
+		<s:Scroller width="100%" height="100%">
+			<s:Group>
+				<s:layout>
+					<s:TileLayout/>
+				</s:layout>
+				<s:BorderContainer borderColor="0xEEFFEE">
+					<olive:OliveGraph id="graph1" height="400" width="800" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+									  nodeRenderer="{nodeRenderer}" groupNodeRenderer="{groupRenderer1}"/>
+				</s:BorderContainer>
+				<s:BorderContainer borderColor="0xEEFFEE">
+					<olive:OliveGraph id="graph2" height="400" width="800" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+								  nodeRenderer="{nodeRenderer}" groupNodeRenderer="{groupRenderer2}"/>
+				</s:BorderContainer>
+				<s:BorderContainer borderColor="0xEEFFEE">
+					<olive:OliveGraph id="graph3" height="400" width="800" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+									  nodeRenderer="{nodeRenderer}" groupNodeRenderer="{groupRenderer3}"/>
+				</s:BorderContainer>	
+				<s:BorderContainer borderColor="0xEEFFEE">
+					<olive:OliveGraph id="graph4" height="400" width="800" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+								  nodeRenderer="{nodeRenderer}" groupNodeRenderer="{groupRenderer4}"/>
+				</s:BorderContainer>	
+			</s:Group>
+		</s:Scroller>
+</s:Application>

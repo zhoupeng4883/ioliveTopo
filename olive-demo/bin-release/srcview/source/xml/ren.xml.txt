@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<graph>
+  <node id="1" text="小北" tooltip="小北北" type="女" icon="assets/ren/xb.jpg"/>
+  <node id="2" text="二宝" tooltip="二宝" type="男" icon="assets/ren/erb.jpg"/>
+  <node id="3" text="小灰灰" tooltip="小灰灰" type="女" icon="assets/ren/saohui.jpg"/>
+  <node id="4" text="骚情" tooltip="骚情" type="男" icon="assets/ren/sq.jpg"/>
+  <node id="5" text="果子" tooltip="果子" type="女" icon="assets/ren/guoguo.jpg"/>
+  <node id="6" text="晓东" tooltip="小东" type="男" icon="assets/ren/xd.jpg"/>
+  <node id="7" text="桃子" tooltip="桃子" type="女" icon="assets/ren/taozi.jpg"/>
+  <node id="8" text="行天下" tooltip="行天下" type="男" icon="assets/ren/tianxia.jpg"/>
+  <node id="9" text="小楼" tooltip="小楼" type="男" icon="assets/ren/xl.jpg"/>
+   <node id="10" text="来福" tooltip="来福" type="女" icon="assets/ren/lf.jpg"/>
+ 
+  <arc id="100" type="connectedTo" tooltip="" source="1" destination="2" selected="true"/>
+    <arc id="108" type="connectedTo" tooltip="" source="1" destination="3" selected="true"/>
+  <arc id="101" type="connectedTo" tooltip="" source="2" destination="3"/>
+  <arc id="102" type="undirected" tooltip="" source="3" destination="4"/>
+  <arc id="103" type="connectedTo" tooltip="" source="4" destination="3"/>
+  <arc id="104" type="undirected" tooltip="" source="6" destination="4"/>
+  <arc id="105" type="connectedTo" tooltip="" source="7" destination="6"/>
+  <arc id="106" type="undirected" tooltip="" source="8" destination="9"/>
+ 
+  <arc id="107" type="connectedTo" tooltip="" source="5" destination="2"/>
+   <arc id="109" type="connectedTo" tooltip="" source="5" destination="10"/>
+
+
+</graph>

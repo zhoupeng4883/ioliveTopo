@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+自定义ToolBar示例;根据需要自定义ToolBar控制时，可模仿此例
+见/olive-demo/src/extend/bar/MetroToolBar.mxml
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="自定义ToolBar示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive" xmlns:bar="extend.bar.*" xmlns:sample="sample.*">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphModelEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.renderer.FxgNodeRenderer;
+			
+			import mx.controls.Alert;
+			
+			import sample.SimpleXmlGraphModel;
+			
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				graph.setBackgroundColor(0x0C4283);
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/StarLayoutAlgorithmDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,model_nodeAddedHandler);
+			}
+			
+			protected function model_nodeAddedHandler(event:GraphXMLModelEvent):void
+			{
+				graph.runLayout();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<bar:MetroToolBar graph="{graph}" width="100%" backgroundColor="0x000000" borderVisible="false"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new FxgNodeRenderer()}" ignoreBounds="true"/>
+	</s:VGroup>
+</s:Application>

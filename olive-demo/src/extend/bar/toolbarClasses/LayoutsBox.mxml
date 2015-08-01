@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:ui="extend.bar.*" 
+	implements="com.iolive.topology.controls.IControl" gap="4">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.AlgorithmsTypeConst;
+			import com.iolive.topology.consts.ControlNames;
+			import com.iolive.topology.layouts.Layouts;
+			import com.iolive.topology.layouts.draw2d.algorithms.GridLayoutAlgorithm;
+			import com.iolive.topology.layouts.draw2d.algorithms.ILayoutAlgorithm;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			
+			import flashx.textLayout.tlf_internal;
+			[Bindable]
+			private var igraph:IGraph;
+			/**
+			 * 必设属性
+			 * @param graph 画布属性
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.igraph = value;
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.igraph;
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.LAYOUT;
+			}
+			
+			
+			private function runLayout(layoutName:String):void{
+				try{
+					var layoutAlgorithm:ILayoutAlgorithm = ILayoutAlgorithm(Layouts.getInstance().getLayout(layoutName));
+					if (graph && layoutAlgorithm) {
+						var timerID:uint = setTimeout(function():void {
+							clearTimeout(timerID);
+							if (graph) {
+								graph.runLayout(layoutAlgorithm);
+							}
+						}, 250);
+					}
+				}catch(e:Error){
+					AlertTitle.showTip("布局算法有误",null,AlertTitle.error);
+				}
+			}
+			
+			
+			protected function metrobutton1_clickHandler(event:MouseEvent):void
+			{
+				graph.runLayout();
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup gap="4">
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_05.png')" click="runLayout(AlgorithmsTypeConst.VerticalTreeLayoutAlgorithm)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_34.png')" click="runLayout(AlgorithmsTypeConst.VerticalTreeLayoutBottomAlgorithm)"/>
+		</s:HGroup>
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_35.png')" click="runLayout(AlgorithmsTypeConst.HorizontalTreeLayoutAlgorithm)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_36.png')" click="runLayout(AlgorithmsTypeConst.HorizontalTreeLayoutRightAlgorithm)"/>
+		</s:HGroup>
+	</s:VGroup>
+	<s:Spacer width="5"/>
+	<ui:MetroButton icon="@Embed(source='assets/wp8/pic_09.png')" click="runLayout(AlgorithmsTypeConst.SpringLayoutAlgorithm)"/>
+	<s:VGroup gap="4">
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_07.png')" click="runLayout(AlgorithmsTypeConst.RadialLayoutAlgorithm)"/>
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_11.png')" click="runLayout(AlgorithmsTypeConst.IndentedTreeLayoutAlgorithm)"/>
+	</s:VGroup>
+	<s:Spacer width="5"/>
+	<s:VGroup gap="4">
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_32.png')" click="runLayout(AlgorithmsTypeConst.EllipseLayoutAlgorithm)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_33.png')" click="runLayout(AlgorithmsTypeConst.EllipseLayoutCenterAlgorithm)"/>
+		</s:HGroup>
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_39.png')" click="runLayout(AlgorithmsTypeConst.CircleLayoutAlgorithm)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_40.png')" click="runLayout(AlgorithmsTypeConst.CircleLayoutCenterAlgorithm)"/>
+		</s:HGroup>
+	</s:VGroup>
+	<s:Spacer width="5"/>
+	
+	<s:VGroup gap="4">
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_14.png')" click="runLayout(AlgorithmsTypeConst.GridLayoutAlgorithm_NAME_ALPHA)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_15.png')" click="runLayout(AlgorithmsTypeConst.GridLayoutAlgorithm_NAME_BY_NODE_ID)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_16.png')" click="runLayout(AlgorithmsTypeConst.HorizontalLayoutAlgorithm)"/>
+		</s:HGroup>
+		<s:HGroup gap="4">
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_17.png')" click="runLayout(AlgorithmsTypeConst.GridLayoutAlgorithm_NAME_BY_NODE_TYPE)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_18.png')" click="runLayout(AlgorithmsTypeConst.GridLayoutAlgorithm_NAME_BY_ARC_COUNT)"/>
+			<ui:MetroButton icon="@Embed(source='assets/wp8/pic_19.png')" click="runLayout(AlgorithmsTypeConst.VerticalLayoutAlgorithm)"/>
+		</s:HGroup>
+	</s:VGroup>
+	<s:Spacer width="5"/>
+	<ui:MetroButton icon="@Embed(source='assets/wp8/pic_20.png')" click="metrobutton1_clickHandler(event)"/>
+</s:HGroup>

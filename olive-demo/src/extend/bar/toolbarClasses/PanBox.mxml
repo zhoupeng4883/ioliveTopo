@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:ui="extend.bar.*">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.ControlNames;
+			import com.iolive.topology.consts.EmbedIcons;
+			import com.iolive.topology.events.GraphSelectionModeChangedEvent;
+			import com.iolive.topology.utils.MoveManager;
+			
+			import mx.collections.ArrayCollection;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindbale]
+			private var panMgr:MoveManager;
+			[Bindbale]
+			private var marqueeMgr:MoveManager;
+			[Bindable]
+			private var igraph:IGraph;
+			
+			
+			/**
+			 * 必设属性
+			 * @param graph 画布属性
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.igraph = value;
+				this.panMgr = value.panManager;
+				this.marqueeMgr = value.marqueeManager;
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.igraph;
+			}
+			
+			private function changeTool(index:int):void {
+					panMgr.enabled = (index == 0);
+					marqueeMgr.enabled = (index == 1);
+					var mode:String = (panMgr.enabled ? GraphSelectionModeChangedEvent.MODE_PAN : 
+						GraphSelectionModeChangedEvent.MODE_MARQUEE);
+					graph.dispatchEvent(new GraphSelectionModeChangedEvent(mode));
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.PAN_SELECT;
+			}
+		]]>
+	</fx:Script>
+	<ui:MetroButton icon="@Embed(source='assets/wp8/pic_03.png')" click="changeTool(0)" toolTip="单选"/>
+	<ui:MetroButton icon="@Embed(source='assets/wp8/pic_04.png')" click="changeTool(1)" toolTip="框选"/>
+</s:HGroup>

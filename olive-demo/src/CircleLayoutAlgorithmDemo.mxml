@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+布局算法之圆形布局示例:
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="圆形布局Demo"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.consts.AlgorithmsTypeConst;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.layouts.Layouts;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.renderer.FxgNodeRenderer;
+			
+			private function init():void {
+				createModel();
+			}
+			
+			private function createModel():void{
+				for(var i:int = 1; i <= 80; i ++){
+					var node:DefaultGraphNode = new DefaultGraphNode("n_"+i);
+					model.addNode(node);
+				}
+				var sourceNode:IGraphNode = model.nodes[0];
+				var distNode:IGraphNode = model.nodes[model.nodes.length-1];
+				model.addArc(new DefaultGraphArc("a_0",sourceNode,distNode,"arc"));
+				for(var j:int = 1; j < model.nodes.length-1; j ++){
+					 sourceNode = model.nodes[j-1];
+					 distNode = model.nodes[j];
+					 model.addArc(new DefaultGraphArc("a_"+j,sourceNode,distNode,"arc"));
+				}
+				graph.runLayoutByName(AlgorithmsTypeConst.CircleLayoutAlgorithm);
+			}
+			
+			private function runLayout(layoutName:String):void{
+				if(layoutName == AlgorithmsTypeConst.CircleLayoutCenterAlgorithm
+				|| layoutName == AlgorithmsTypeConst.EllipseLayoutCenterAlgorithm){
+					var selNodes:Array = [];//同心圆布局时，以选的节点在内环组成新的圆形
+					for(var i:int = 0 ; i < model.nodes.length; i += 3){
+						selNodes.push(model.nodes[i]);
+					}
+					graph.selectedNodes = selNodes;
+				}
+				graph.runLayoutByName(layoutName);
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		@namespace renderer "extend.renderer.*";
+		renderer|FxgNodeRenderer{
+			normalBackgroundAlpha:0;
+			normalBorderAlpha:0;
+			selectedBackgroundAlpha:0;
+			selectedBorderAlpha:0;
+			overBackgroundAlpha:0;
+			selectedBorderAlpha:0;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<olive:DefaultGraphModel id="model"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<s:SkinnableContainer width="100%" skinClass="skins.control.DefaultControlBarSkin">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="center"/>
+			</s:layout>
+			<s:Button label="圆形" click="runLayout(AlgorithmsTypeConst.CircleLayoutAlgorithm)"/>
+			<s:Button label="同心圆" click="runLayout(AlgorithmsTypeConst.CircleLayoutCenterAlgorithm)"/>
+			<s:Button label="椭圆" click="runLayout(AlgorithmsTypeConst.EllipseLayoutAlgorithm)"/>
+			<s:Button label="双层椭圆" click="runLayout(AlgorithmsTypeConst.EllipseLayoutCenterAlgorithm)"/>
+		</s:SkinnableContainer>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new FxgNodeRenderer()}" model="{model}"/>
+	</s:VGroup>
+</s:Application>

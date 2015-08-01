@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+NodeToolTipDemo.mxml中通过toolTipFunction自定义了ToolTip的显示
+本例中通过在节点渲染器中重写，达到自定义ToolTip显示的目的;
+见渲染器示例ToolTipNodeRenderer.mxml和CustomNodeToolTip.mxml
+线段的ToolTip同理
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="自定义显示ToolTip的例子"
+			   xmlns:olive="Library://com.olive.core/flex/olive" xmlns:renderer="extend.renderer.*">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import mx.core.ScrollPolicy;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/IconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		@namespace renderer "extend.renderer.*";
+		renderer|ToolTipNodeRenderer{
+			normalBackgroundAlpha:0;
+			normalBorderThickness:0;
+			overBackgroundAlpha:0;
+			selectedBackgroundAlpha:0;
+		}
+		olive|AbstractArcRenderer{
+			normalLineThickness:6;
+			overLineThickness:6;
+			selectedLineThickness:6;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<renderer:ToolTipNodeRenderer id="node_renderer"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{node_renderer}" />
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

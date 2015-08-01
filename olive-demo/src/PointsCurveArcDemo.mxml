@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+给定描点的曲线线段绘制
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			import com.iolive.topology.renderers.PointsDatasArcRenderer;
+			import com.iolive.topology.utils.Utils;
+			import com.iolive.topology.utils.Uuid;
+			
+			import extend.renderer.AlarmNodeRenderer;
+			
+			import flash.utils.setInterval;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				graph.model = model;
+				graph.arcRenderer=new PointsDatasArcRenderer();
+				initData();
+			}
+			
+			public function initData():void{
+				var node1:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"","dsafa");
+				node1.layoutX = 100;
+				node1.layoutY = 500;
+				model.addNode(node1);
+				var node2:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"","dsafa");
+				node2.layoutX = 1200;
+				node2.layoutY = 700;
+				model.addNode(node2);
+				var arc:DefaultGraphArc = new DefaultGraphArc(new Uuid().toString(),node1,node2,"cnx");
+				arc.data = {points:[new Point(100,500),new Point(500,300),new Point(1200,700),new Point(1270,500),new Point(1500,750)]};
+				arc.lineType = PointsDatasArcRenderer.ARCTYPE_CURVE;
+				model.addArc(arc);
+			}
+			 
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Declarations>
+		<olive:PointsDatasArcRenderer id="arcRenderer" controlEnabled="false"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%" id="bar"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" arcRenderer="{arcRenderer}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

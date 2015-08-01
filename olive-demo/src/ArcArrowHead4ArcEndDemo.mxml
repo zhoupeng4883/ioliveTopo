@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+单箭头位于弧线终点
+数据源文件见ArcArrowHead4ArcEndDemo.mxml
+子节点以children为标示
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="单箭头位于弧线终点示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive" >
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphNodeEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.SimpleArrowHead4EndpointArcRenderer;
+			import com.iolive.topology.renderers.SimpleDoubleArrowHeadArcRenderer;
+			import com.iolive.topology.renderers.SimpleLabelPlusIconNodeRenderer;
+			import com.iolive.topology.utils.Uuid;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				var colorProvider:IColorProvider = graph.nodeRenderer.colorProvider;
+				colorProvider.setLineStyleForArcType("undirected", "dashed");
+				graph.nodeRenderer = new SimpleLabelPlusIconNodeRenderer(showPlusIcon);
+				graph.arcRenderer=new SimpleArrowHead4EndpointArcRenderer();
+				graph.arcRenderer.colorProvider=colorProvider;
+				graph.nodeRenderer.colorProvider = colorProvider;
+				
+				
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/LabelPlusIconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+				
+				
+			}
+			
+			/**
+			 * 根据节点子集数目返回是否显示"+"
+			 * 为SimpleLabelPlusIconNodeRenderer渲染器必须函数
+			 */ 
+			private function showPlusIcon(renderer:SimpleLabelPlusIconNodeRenderer):Boolean {
+				var data:Object = renderer.data.data;
+				if(data.hasOwnProperty("children") 
+					&& data['children'] != null){
+					return true;
+				}
+				return false;
+			}
+			
+			/**
+			 * 节点双击事件
+			 */ 
+			private function nodeDoubleClicked(event:GraphNodeEvent):void {
+				var clickNode:IGraphNode = event.node;
+				var data:Object = clickNode.data;
+				
+				if(data.hasOwnProperty("children") 
+					&& data['children'] != null){
+					if(clickNode.getProperty("childrenCreated")){//已经点过
+						return ;
+					}
+					
+					var arr:Array = [];
+					var children:* = data['children'].node;
+					if(children is Array){
+						arr = arr.concat(children);
+					}else{
+						arr.push(children);
+					}
+					
+					for each(var nodeData:Object in arr){
+						var node:IGraphNode = model.addSimpleNode(nodeData.id,nodeData.type,nodeData.text,nodeData);
+						model.addSimpleArc(new Uuid().toString(),clickNode,node);
+					}
+					graph.runLayout();
+					graph.repaintNode(clickNode);
+					clickNode.setProperty("childrenCreated",true);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" showArcLabels="true" nodeDoubleClick="nodeDoubleClicked(event)" />
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

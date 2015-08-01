@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" gap="4" implements="com.iolive.topology.controls.IControl"
+		 xmlns:ui="extend.bar.*">
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:HGroup gap="3">
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_23.png')"  click="fitToScreen(event)"/>
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_24.png')" click="expandNodePositions(event)"/>
+	</s:HGroup>
+	<s:HGroup gap="3">
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_25.png')"  click="fullScreen()"/>
+		<ui:MetroButton icon="@Embed(source='assets/wp8/pic_26.png')" id="fitBtn"  click="exitFullScreen()" enabled="false"/>
+	</s:HGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.ControlNames;
+			[Bindable]
+			private var iGraph:IGraph;
+			
+			/**
+			 * 设置画布对象引用
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.iGraph = value;
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.graph;
+			} 
+			
+			protected function fitToScreen(event:MouseEvent):void
+			{
+				iGraph.fitToScreen(iGraph.ignoreBounds);
+			}
+			
+			protected function expandNodePositions(event:MouseEvent):void
+			{
+				iGraph.expandNodePositions();
+			}
+			
+			private function fullScreen():void{
+				stage.displayState=StageDisplayState.FULL_SCREEN; 
+				fitBtn.enabled = true;
+			}
+			
+			private function exitFullScreen():void{
+				stage.displayState=StageDisplayState.NORMAL; 
+				fitBtn.enabled = false;
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.SCREEN;
+			}
+			
+		]]>
+	</fx:Script>
+</s:VGroup>

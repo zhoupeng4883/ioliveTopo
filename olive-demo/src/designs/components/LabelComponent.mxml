@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="200">
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.events.TextOperationEvent;
+			protected function doubleClickHanlder(event:MouseEvent):void
+			{
+				this.currentState = "input";
+			}
+			
+			protected function textAreaChangeHanlder(event:TextOperationEvent):void
+			{
+				label.text = textArea.text;
+			}
+			
+			protected function textAreaFocusOutHanlder(event:FocusEvent):void
+			{
+				this.currentState = "normal";
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="input"/>
+	</s:states>
+	<s:Rect left="0" right="0" top="0" bottom="0">
+		<s:stroke>
+			<s:SolidColorStroke color="0x8EA3BE"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF"/>
+		</s:fill>
+	</s:Rect>
+	<s:Rect left="2" right="2" top="2" height="25">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x8EA3BE"/>
+				<s:GradientEntry color="0xFFFFFF"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Label text="自定义组件示例" fontWeight="bold" x="5" y="5"/>
+	<s:Label text="请双击输入" id="label" excludeFrom="input" fontSize="30" x="10" y="30" width="100%" doubleClick="doubleClickHanlder(event)" doubleClickEnabled="true"/>
+	<s:TextArea text="请双击输入" id="textArea" width="100%" height="95%" x="0" y="30" includeIn="input" change="textAreaChangeHanlder(event)" focusOut="textAreaFocusOutHanlder(event)"/>
+</s:Group>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   close="closeHanlder(event)"
+			   width="650" height="500" title="导入导出XML"
+			   creationComplete="init(event)">
+	<s:states>
+		<s:State name="exp"/>
+		<s:State name="imp"/>
+	</s:states>
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			import com.iolive.topology.utils.ExportUtil;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			public var graph:IGraph;
+			
+			/**
+			 * 初始化
+			 */ 
+			protected function init(event:FlexEvent):void{
+				writeXML();
+			}
+			
+			/**
+			 * 关闭窗口
+			 */ 
+			protected function closeHanlder(event:CloseEvent = null):void{
+				PopUpManager.removePopUp(this);
+			}
+			
+			/**
+			 * 画布模型输出到Text
+			 */ 
+			protected function writeXML():void{
+				var xml:XML = graph.exportToXML();
+				var setting:XML = <setting/>
+				setting.@nodeDragEnabled = graph.nodeDragEnabled;
+				setting.@nodeResizeEnabled = graph.nodeResizeEnabled;
+				setting.@styleProperty = graph.styleProperty;
+				if(xml){
+					xml.appendChild(setting);
+				}
+				xmlText.text = xml.toString();
+			}
+			
+			/**
+			 * 导出XML文件
+			 */ 
+			protected function exportXML(event:MouseEvent):void{
+				var file:FileReference = new FileReference();
+				file.save(xmlText.text,xmlFileName.text+".xml");
+			}
+			
+			/**
+			 * 导入XML到text
+			 */ 
+			protected function readXML():void{
+				Security.allowDomain("*");
+				var file:FileReference = new FileReference();
+				var xmlFilter:FileFilter = new FileFilter("XML Document (*.xml)", "*.xml");
+				file.browse([xmlFilter]);
+				file.addEventListener(Event.COMPLETE,fileOpenComplete);
+				file.addEventListener(Event.SELECT,fileSelected);
+				
+				function fileOpenComplete(event:Event):void{
+					if(file.data){
+						var str:String = file.data.readUTFBytes(file.data.length);
+						readXmlText.text = str;
+					}
+				}
+				function fileSelected(e:Event):void{
+					var tar:* = e.target;
+					impFileName.text = file.name;
+					file.load();
+				}
+			}
+			
+			/**
+			 * 导入导出状态切换
+			 */ 
+			protected function stateChanger(event:IndexChangeEvent):void{
+				this.currentState = bar.selectedIndex != 0 ? "imp" : "exp";
+			}
+			
+			/**
+			 * 加载到画布
+			 */ 
+			protected function importXML(event:MouseEvent):void
+			{
+				if(!readXmlText.text){
+					AlertTitle.showTip("XML数据为空",null,AlertTitle.warn);
+					return;
+				}else{
+					var xml:XML = new XML(readXmlText.text)
+					graph.importFromXML(xml,true);
+					if(xml && xml.setting){
+						graph.styleProperty = xml.setting.@styleProperty;
+						graph.nodeDragEnabled = xml.setting.@nodeDragEnabled == "true";
+						graph.nodeResizeEnabled = xml.setting.@nodeResizeEnabled == "true";
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:ButtonBar id="bar" selectedIndex="0" change="stateChanger(event)">
+		<s:dataProvider>
+			<s:ArrayList>
+				<fx:Object label="导出XML"/>
+				<fx:Object label="导入XML"/>
+			</s:ArrayList>
+		</s:dataProvider>
+	</s:ButtonBar>
+	<s:Scroller width="100%" height="100%" includeIn="exp">
+		<s:Group>
+			<s:RichEditableText id="xmlText"/>
+		</s:Group>
+	</s:Scroller>
+	<s:Scroller width="100%" height="100%" includeIn="imp">
+		<s:Group>
+			<s:RichEditableText id="readXmlText"/>
+		</s:Group>
+	</s:Scroller>
+	<s:HGroup horizontalAlign="center" width="100%" verticalAlign="middle" gap="0" includeIn="exp">
+		<s:TextInput text="iolive" id="xmlFileName"/>
+		<s:Label text=".xml"/>
+		<s:Spacer width="10"/>
+		<s:Button label="刷新" click="writeXML()"/>
+		<s:Spacer width="10"/>
+		<s:Button label="导出" click="exportXML(event)"/>
+	</s:HGroup>
+	<s:HGroup horizontalAlign="center" width="100%" verticalAlign="middle" gap="0" includeIn="imp">
+		<s:TextInput id="impFileName"/>
+		<s:Spacer width="10"/>
+		<s:Button label="选择文件" click="readXML()"/>
+		<s:Spacer width="10"/>
+		<s:Button label="加载到画布" click="importXML(event)"/>
+	</s:HGroup>
+</s:TitleWindow>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="225" height="125"
+		 implements="mx.core.IToolTip">
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:Path data="M 0 0 H 200 V 110 H 50 L 45 120 L 40 110 H 0 V 0 Z" width="100%" height="100%">
+		<s:stroke>
+			<s:SolidColorStroke weight="1" color="#000000" alpha="0.1"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF" alpha="0.95"/>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter color="0x000000" alpha="0.3" blurX="6" blurY="6" distance="16.0"/>
+		</s:filters>
+	</s:Path>
+	<s:VGroup width="100%" height="100%" paddingBottom="10">
+		<s:Group width="100%">
+			<s:Label id="title" fontWeight="bold" text="{node.text}" left="5" top="5" fontSize="14"/>
+		</s:Group>
+		<s:Line width="100%">
+			<s:stroke>
+				<s:SolidColorStroke color="blue"/>
+			</s:stroke>
+		</s:Line>
+		<!--<s:DataGrid width="100%" borderVisible="false" height="20">
+			<s:columns>
+				<s:ArrayList>
+					<s:GridColumn headerText="名称" dataField="name"/>
+					<s:GridColumn headerText="IP" dataField="ip"/>
+				</s:ArrayList>
+			</s:columns>
+		</s:DataGrid>-->
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="5">
+			<s:Label text="id:" width="45"/>
+			<s:Label text="{node.id}"/>
+		</s:HGroup>
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="5">
+			<s:Label text="type:" width="45"/>
+			<s:Label text="{node.type}"/>
+		</s:HGroup>
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="5">
+			<s:Label text="icon:" width="45"/>
+			<s:Label text="{node.data.icon}"/>
+		</s:HGroup>
+	</s:VGroup>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.utils.StringUtils;
+			
+			import flash.net.navigateToURL;
+			
+			import mx.core.FlexGlobals;
+			
+			[Bindable]
+			public var node:IGraphNode;
+			
+			public function get text():String{
+				return null;
+			}
+			public function set text(value:String):void{
+			}
+			
+		]]>
+	</fx:Script>
+</s:Group>

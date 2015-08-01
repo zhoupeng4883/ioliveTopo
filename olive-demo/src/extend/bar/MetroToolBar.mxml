@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx"  height="75"
+					  xmlns:controls="com.iolive.topology.controls.*" 
+					  creationComplete="init(event)" 
+					  xmlns:ui="com.iolive.topology.ui.*"
+					  xmlns:toolbarClasses="extend.bar.toolbarClasses.*">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:layout>
+		<s:HorizontalLayout verticalAlign="middle" paddingLeft="10"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.controls.IControl;
+			import com.iolive.topology.utils.MoveManager;
+			
+			import mx.core.IVisualElement;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			/**
+			 * 画布对象
+			 */ 
+			[Bindable]
+			private var igraph:IGraph;
+			
+			/**
+			 * 必设属性
+			 * @param graph 画布属性
+			 */ 
+			public function set graph(value:IGraph):void{
+				this.igraph = value;
+				this.panManager = value.panManager;
+				this.marqueeManager = value.marqueeManager;
+			}
+			
+			/**
+			 * 得到画布对象引用
+			 */ 
+			public function get graph():IGraph{
+				return this.igraph;
+			}
+			
+			/**
+			 * 漫游管理对象
+			 */ 
+			[Bindbale]
+			public var panManager:MoveManager;
+			
+			/**
+			 * 框选管理对象
+			 */ 
+			[Bindbale]
+			public var marqueeManager:MoveManager;
+			
+			protected function init(event:FlexEvent):void
+			{
+			}
+			
+			/**
+			 * 隐藏/显示某个Control对象
+			 * @param controlName 见枚举类ControlNames
+			 * @see com.iolive.topology.consts.ControlNames
+			 * @param visible Boolean
+			 */ 
+			public function setControlVisible(controlName:String,visible:Boolean = true):void{
+				var ct:IControl = getControlByName(controlName);
+				if(ct){
+					ct.visible = visible;
+					ct.includeInLayout = visible;
+				}
+			}
+			
+			/**
+			 * 根据Control名称隐藏其Control对象
+			 * @param controlName 见枚举类ControlNames
+			 *  @see com.iolive.topology.consts.ControlNames
+			 */ 
+			public function hideControl(controlName:String):void{
+				setControlVisible(controlName,false);
+			}
+			
+			/**
+			 * 根据Control名称显示其Control对象
+			 * @param controlName 见枚举类ControlNames
+			 *  @see com.iolive.topology.consts.ControlNames
+			 */ 
+			public function showControl(controlName:String):void{
+				setControlVisible(controlName,true);
+			}
+			
+			/**
+			 * 根据Control名称取得对应的Control对象
+			 * @param controlName 见枚举类ControlNames
+			 * @see com.iolive.topology.consts.ControlNames
+			 * @return IControl
+			 */ 
+			protected function getControlByName(controlName:String):IControl{
+				for(var i:int = 0 ; i < numElements; i ++){
+					var ui:IVisualElement = getElementAt(i);
+					if(ui is IControl){
+						var control:IControl = (ui as IControl);
+						if(control.controlName == controlName){
+							return control;
+						}
+					}
+				}
+				return null;
+			}
+		]]>
+	</fx:Script>
+	<s:HGroup gap="4">
+		<s:VGroup gap="4">
+			<toolbarClasses:HistoryBox graph="{igraph}" gap="3"/>
+			<toolbarClasses:PanBox graph="{igraph}" gap="3"/>
+		</s:VGroup>
+		<s:Spacer width="5"/>
+		<toolbarClasses:LayoutsBox graph="{igraph}"/>
+		<toolbarClasses:ZoomBox graph="{igraph}"/>
+		<s:Spacer width="5"/>
+		<toolbarClasses:ScreenBox graph="{igraph}"/>
+		<s:Spacer width="5"/>
+		<toolbarClasses:PrintBox graph="{igraph}"/>
+		<toolbarClasses:HelpBox/>
+	</s:HGroup>
+</s:BorderContainer>

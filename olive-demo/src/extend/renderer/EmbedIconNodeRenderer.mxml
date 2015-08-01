@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+类似于AlarmNodeRenderer不同的呈现，用于呈现设备的状态
+-->
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive" dropShadow="false" mouseOverEnabled="false">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var embedIcon:Class;
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:EmbedIconNodeRenderer = new EmbedIconNodeRenderer();
+				copyProperties(renderer);
+				renderer.embedIcon = this.embedIcon;
+				return renderer;
+			}
+		]]>
+	</fx:Script>
+	<olive:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</olive:layout>
+	<s:Image id="img" source="{embedIcon}"/>
+</olive:AbstractNodeRenderer>

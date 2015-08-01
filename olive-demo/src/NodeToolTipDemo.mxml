@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+自定义显示ToolTip的例子,
+节点渲染器基类AbstractNodeRenderer预留了toolTipFunction的方法，可通过此方法自定义需要的ToolTip;
+线段渲染器基类AbstractArcRenderer也预留了AbstractArcRenderer的方法，可通过此方法自定义需要的ToolTip显示；
+将鼠标移动到节点或连线上看看自己定义的ToolTip显示吧！
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="自定义显示ToolTip的例子"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import mx.core.ScrollPolicy;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/IconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+				graph.arcRenderer.toolTipFunction = arcToolTipFunction;
+				graph.horizontalScrollPolicy = ScrollPolicy.OFF;
+			}
+			
+			/**
+			 * 自定义节点的ToolTip显示，请参见API AbstractNodeRenderer.toolTipFunction
+			 */ 
+			public function nodeToolTipFunction(node:IGraphNode):String{//这里简单写的示例，可根据自己需求更改
+				var r:Number = Math.random();
+				trace("**********************"+r);
+				return "节点名称是:"+node.data.text+"\n"+"节点类型是:"+node.data.type+"\n节点显示的图片是:"+node.data.icon+"\n"+r;
+			}
+			
+			/**
+			 * 自定义线段的ToolTip显示，请参见API AbstractArcRenderer.toolTipFunction
+			 */ 
+			public function arcToolTipFunction(arc:IGraphArc):String{
+				var r:Number = Math.random();
+				trace("**********************"+r);
+				return "这是一根连线"+"\n类型："+arc.type+"\nA端节点是:"+arc.sourceNode.text+"\nB端节点是:"+arc.destinationNode.text+"\n"+r;
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		olive|AbstractArcRenderer{
+			normalLineThickness:6;
+			overLineThickness:6;
+			selectedLineThickness:6;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<olive:ImageNodeRenderer iconField="icon" toolTipFunction="nodeToolTipFunction" id="node_renderer"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{node_renderer}" />
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

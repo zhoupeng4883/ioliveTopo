@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+为画布设置地图的简单例子
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   width="100%" minHeight="400" creationComplete="init()"
+			   pageTitle="地图作为画布背景的简单例子">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.consts.ControlNames;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.MapManagerWindow;
+			
+			import mx.managers.PopUpManager;
+			
+			import sample.SimpleXmlGraphModel;
+			
+			import spark.components.Button;
+			private var model:SimpleXmlGraphModel;
+			
+			[Bindable]
+			[Embed(source="/assets/light.png")]
+			private var light:Class;
+			private function init():void {
+				toolbar.hideControl(ControlNames.LAYOUT);
+				toolbar.hideControl(ControlNames.ZOOM);
+				toolbar.hideControl(ControlNames.HISTORY);
+				toolbar.hideControl(ControlNames.SCREEN);
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/SouthAirDemo.xml";
+				graph.model = model;
+				var styleBtn:Button = new Button();
+				styleBtn.setStyle("icon",light);
+				styleBtn.width = 24;
+				styleBtn.height = 24;
+				toolbar.addElement(styleBtn);
+				styleBtn.addEventListener(MouseEvent.CLICK,showStyleWindow);
+				win = new MapManagerWindow();
+				win.graph = this.graph;
+				PopUpManager.addPopUp(win,this);
+				PopUpManager.centerPopUp(win);
+				graph.panManager.enabled = false;
+				graph.nodeDragEnabled = false;
+			}
+			
+			private var win:MapManagerWindow;
+			private function showStyleWindow(event:MouseEvent):void{
+				if(win){
+					win.visible = !win.visible;
+				} 
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		olive|ImageNodeRenderer{
+			normalBackgroundAlpha:0;
+			selectedBackgroundColor:0;
+			overBackgroundAlpha:0;
+			normalBorderAlpha:0;
+			selectedBorderAlpha:0;
+			overBorderAlpha:0;
+		}
+		olive|AbstractArcRenderer{
+			normalLineThickness:1;
+			overLineThickness:1;
+			selectedLineThickness:1;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<olive:ImageNodeRenderer id="nodeRenderer" dropShadow="false"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%" id="toolbar"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" headerLabelText="南方航空航线图" 
+						  nodeRenderer="{nodeRenderer}" 
+						  selectionHandlingEnabled="false" scrollWheelZoomEnabled="false"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

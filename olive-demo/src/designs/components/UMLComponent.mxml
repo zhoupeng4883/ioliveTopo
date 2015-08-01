@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" >
+	
+	<fx:Script>
+		<![CDATA[
+			protected function contentDoubleClickHanlder(event:MouseEvent):void
+			{
+				this.currentState = "edit";
+			}
+			
+			protected function contentFocusOutHandler(event:FocusEvent):void
+			{
+				this.currentState="normal";
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="edit"  stateGroups="titleEdit,attributesEdit,operationsEdit"/>
+	</s:states>
+	<s:Rect left="0" right="0" top="0" bottom="0" 
+			bottomLeftRadiusX="5" bottomLeftRadiusY="5"
+			bottomRightRadiusX="5" bottomRightRadiusY="5">
+		 <s:stroke>
+			 <s:SolidColorStroke color="0x8EA3BE"/>
+		 </s:stroke>
+		 <s:fill>
+			 <s:SolidColor color="0xFFFFFF"/>
+		 </s:fill>
+	 </s:Rect>
+	<s:VGroup width="100%" height="100%" gap="0" doubleClickEnabled="true" doubleClick="contentDoubleClickHanlder(event)"  focusOut="contentFocusOutHandler(event)">
+		<s:BorderContainer height="40" width="100%" backgroundColor="0x2A86C3" >
+			<s:Label text="Class" horizontalCenter="0" verticalCenter="0" id="titleLab" includeIn="normal" fontSize="15" />
+			<s:TextInput width="100%" height="100%" text="Class" includeIn="titleEdit" id="titleInput" change="{titleLab.text = titleInput.text}" />
+		</s:BorderContainer>
+		<s:BorderContainer height="25" width="100%" backgroundColor="0xD2D2D2">
+			<s:Label text="Attributes" verticalCenter="0"/>
+		</s:BorderContainer>
+		<s:Group width="100%" height="60">
+			<s:Label text="- Attributes 1"  excludeFrom="attributesEdit" id="attributesLab"/>
+			<s:TextInput width="100%" height="100%" text="- Attributes 1" id="attributesInput" includeIn="attributesEdit" 
+						 change="{attributesLab.text = attributesInput.text}" />
+		</s:Group>
+		<s:BorderContainer height="25" width="100%" backgroundColor="0xD2D2D2">
+			<s:Label text="Operations" verticalCenter="0"/>
+		</s:BorderContainer>
+		<s:Group width="100%" height="60">
+			<s:Label text="- Operations 1" id="operationsLab" excludeFrom="operationsEdit"/>
+			<s:TextInput width="100%" height="100%" text="- Operations 1" includeIn="operationsEdit" id="operationsInput"
+						 change="{operationsLab.text = operationsInput.text}"/>
+		</s:Group>
+	</s:VGroup>
+</s:Group>

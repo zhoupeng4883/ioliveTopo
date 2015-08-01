@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<graph>
+  <node id="1" text="用户表"  type="table" >
+  	<fields>
+  		<field dataType="number" length="11" name="用户ID"/>
+  		<field dataType="varchar2" length="50" name="用户名"/>
+  		<field dataType="varchar2" length="50" name="密码"/>
+  		<field dataType="varchar2" length="50" name="中文名"/>
+  	</fields>
+  </node>
+  <node id="2" text="角色表"  type="table">
+  	<fields>
+  		<field dataType="number" length="11" name="角色ID"/>
+  		<field dataType="varchar2" length="50" name="角色名称"/>
+  	</fields>
+  </node>
+  <node id="3" text="权限表" type="table">
+	  <fields>
+	  		<field dataType="number" length="11" name="权限ID"/>
+	  		<field dataType="number" length="11" name="权限名称"/>
+	  	</fields>
+  </node>
+  <node id="4" text="用户角色表"  type="table" >
+	  <fields>
+		  	<field dataType="number" length="11" name="主键ID"/>
+		  	<field dataType="number" length="11" name="用户ID"/>
+		  	<field dataType="number" length="11" name="角色ID"/>
+	  	</fields>
+  </node>
+  <node id="5" text="角色权限表"  type="table">
+ 	 <fields>
+		   <field dataType="number" length="11" name="主键ID"/>
+		   <field dataType="number" length="11" name="角色ID"/>
+		   <field dataType="number" length="11" name="权限ID"/>
+	  	</fields>
+  </node>
+  <arc id="100" type="一对一"  source="1" destination="4" />
+  <arc id="101" type="一对一"  source="4" destination="2" />
+  <arc id="102" type="一对一"  source="2" destination="5" />
+  <arc id="103" type="ID与"  source="5" destination="3" />
+  <arc id="104" type="多对多"  source="5" destination="3" />
+  <arc id="105" type="多对多"  source="5" destination="3" />
+
+</graph>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%" borderColor="0x8EA3BE" xmlns:extend="extend.*">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.renderers.AbstractArcRenderer;
+			import com.iolive.topology.renderers.IArcRenderer;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.SimpleArrowHead4EndpointArcRenderer;
+			import com.iolive.topology.renderers.SimpleArrowHeadArcRenderer;
+			import com.iolive.topology.renderers.SimpleBrokenLineRenderer;
+			import com.iolive.topology.renderers.SimpleCircleMarkArcRenderer;
+			import com.iolive.topology.renderers.SimpleDoubleArrowHeadArcRenderer;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			
+			import extend.renderer.WaterLineArcRenderer;
+			import extend.renderer.arc.LightningArcRenderer;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ColorPickerEvent;
+			
+			import spark.events.IndexChangeEvent;
+			[Bindable]
+			private var _graph:IGraph;
+			
+			[Bindable]
+			public function get model():DesignGraphModel
+			{
+				return _model;
+			}
+
+			public function set model(value:DesignGraphModel):void
+			{
+				_model = value;
+			}
+
+			public function set graph(value:IGraph):void{
+				this._graph = value;
+			}
+			
+			public function get graph():IGraph{
+				return this._graph;
+			}
+			
+			private var _model:DesignGraphModel;
+			
+			protected function lineTypeBar_changeHandler(event:IndexChangeEvent):void
+			{
+				
+				
+				
+			}
+			
+
+			protected function hslider_changeHandler(event:Event):void
+			{
+				var topLevelStyleManager:IStyleManager2 = FlexGlobals.topLevelApplication.styleManager;
+				var labelStyle:CSSStyleDeclaration = topLevelStyleManager.getStyleDeclaration(".customArrowArcRenderer");
+				labelStyle.setStyle(event.target.id,event.target.value);
+				topLevelStyleManager.setStyleDeclaration(".customArrowArcRenderer", labelStyle, true);
+				graph.reconstructionArcs ();
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="right"/>
+	</s:layout>
+	<s:BorderContainer backgroundColor="0xCEDDF5" width="100%" height="25" borderVisible="false">
+		<s:Label text="箭头编辑器" fontWeight="bold" verticalCenter="0"  x="10"/>
+	</s:BorderContainer>
+	<s:VGroup width="100%" height="100%"  horizontalAlign="right" verticalAlign="middle">
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="headWidth" width="130"/>
+			<s:HSlider id="headWidth" change="hslider_changeHandler(event)" minimum="1" maximum="200" value="20"/>
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="headLength" width="130"/>
+			<s:HSlider id="headLength" change="hslider_changeHandler(event)" minimum="1" maximum="200" value="8"/>
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="shaftThickness" width="130"/>
+			<s:HSlider id="shaftThickness" change="hslider_changeHandler(event)" minimum="1" maximum="150" value="20"/>
+		</s:HGroup>
+		
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="shaftPosition" width="130"/>
+			<s:HSlider id="shaftPosition" change="hslider_changeHandler(event)" minimum="-1" maximum="1" value="0" stepSize="0.1"/>
+		</s:HGroup>
+		
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="shaftControlPosition" width="130"/>
+			<s:HSlider id="shaftControlPosition" change="hslider_changeHandler(event)" minimum="-1" maximum="1" value="0"  stepSize="0.1"/>
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="shaftControlSize" width="130"/>
+			<s:HSlider id="shaftControlSize" change="hslider_changeHandler(event)" minimum="0" maximum="1" value="0.5"  stepSize="0.1"/>
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="edgeControlPosition" width="130"/>
+			<s:HSlider id="edgeControlPosition" change="hslider_changeHandler(event)" minimum="0" maximum="2" value="1"  stepSize="0.1"/>
+		</s:HGroup>
+		
+		<s:HGroup width="100%" verticalAlign="middle" paddingLeft="10">
+			<s:Label text="edgeControlSize" width="130"/>
+			<s:HSlider id="edgeControlSize" change="hslider_changeHandler(event)"  minimum="0" maximum="2" value="1"  stepSize="0.1"/>
+		</s:HGroup>
+	
+	</s:VGroup>
+		
+</s:BorderContainer>

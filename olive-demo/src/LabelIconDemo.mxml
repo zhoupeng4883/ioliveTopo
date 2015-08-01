@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+	简单Label+image渲染节点演示
+	采用XML作为数据源,见labelDemo.xml数据源样例
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="简易文本标签及图片组合节点示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			import com.iolive.topology.renderers.SimpleLabelImageNodeRenderer;
+			import com.iolive.topology.renderers.SimpleLabelNodeRenderer;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/ren.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace graphics "com.iolive.topology.graphics.*";
+		@namespace canvas "com.iolive.topology.canvas.*";
+		@namespace controls "com.iolive.topology.controls.*";
+		@namespace search "com.iolive.topology.search.*";
+		@namespace renderers "com.iolive.topology.renderers.*";
+		renderers|SimpleLabelImageNodeRenderer{
+			overBackgroundAlpha:0;
+			selectedBackgroundAlpha:0;
+		}
+	</fx:Style>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new SimpleLabelImageNodeRenderer()}" />
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

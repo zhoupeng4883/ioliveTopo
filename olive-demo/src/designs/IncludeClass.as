@@ -1,0 +1,151 @@
+package designs
+{
+	import assets.fxg.*;
+	
+	import com.iolive.topology.shape.*;
+	
+	import designs.components.ImageGroupComponent;
+	import designs.components.InfoComponent;
+	import designs.components.LabelComponent;
+	import designs.components.UMLComponent;
+
+	/**
+	 * 用于注册Class,AS编译机制使然，未引用的class不编译进swf，因此在此类中引入需要动态创建的类
+	 */ 
+	public class IncludeClass
+	{
+		 private var a:com.iolive.topology.shape.SimpleRect;
+		 private var b:com.iolive.topology.shape.DashedRect;
+		 private var c:com.iolive.topology.shape.BorderRect;
+		 private var d:com.iolive.topology.shape.HatchRect;
+		 private var e:com.iolive.topology.shape.FancyRect;
+		 private var f:com.iolive.topology.shape.NestedRect;
+		 private var g:com.iolive.topology.shape.Parallelogram;
+		 private var h:com.iolive.topology.shape.Quadrilateral;
+		 private var i:com.iolive.topology.shape.Keystone;
+		 private var j:com.iolive.topology.shape.SimpleCircle;
+		 private var k:com.iolive.topology.shape.DashedEllipse;
+	     private var l:com.iolive.topology.shape.HatchEllipse;
+		 private var m:com.iolive.topology.shape.ArcRect;
+		 private var n:com.iolive.topology.shape.Aquarium;
+		 private var o:com.iolive.topology.shape.BoxRect;
+		 private var p:com.iolive.topology.shape.Conical;
+		 private var q:com.iolive.topology.shape.Diamond6;
+		 private var u:com.iolive.topology.shape.Pencil;
+		 private var v:com.iolive.topology.shape.SimpleTriangle;
+		 private var w:com.iolive.topology.shape.SimpleSemicircle;
+		 private var x:com.iolive.topology.shape.Simple5Star;
+		 private var y:com.iolive.topology.shape.VerArrow;
+		 private var z:com.iolive.topology.shape.SimpleBendArrow;
+		 
+		 private var aa:InfoComponent;
+		 private var bb:ImageGroupComponent;
+		 private var cc:LabelComponent;
+		 private var dd:UMLComponent;
+		 
+		 private var aa1:a1;
+		 private var aa2:a2;
+		 private var aa3:a3;
+		 private var aa4:a4;
+		 private var aa5:a5;
+		 private var aa6:a6;
+		 private var aa7:a7;
+		 private var aa8:a8;
+		 private var aa9:a9;
+		 private var aa10:a10;
+		 private var aa11:a11;
+		 private var aa12:a12;
+		 private var aa13:a13;
+		 private var aa14:a14;
+		 private var aa15:a15;
+		 private var aa16:a16;
+		 private var aa17:a17;
+		 private var aa18:a18;
+		 private var aa19:a19;
+		 private var aa20:a20;
+		 private var aa21:a21;
+		 private var aa22:a22;
+		 private var aa23:a23;
+		 private var aa24:a24;
+		 private var aa25:a25;
+		 private var aa26:a26;
+		 private var aa27:a27;
+		 private var aa28:a28;
+		 private var aa29:a29;
+		 private var aa30:a30;
+		 private var aa31:a31;
+		 private var aa32:a32;
+		 private var aa33:a33;
+		 private var aa34:a34;
+		 private var aa35:a35;
+		 private var aa36:a36;
+		 private var aa37:a37;
+		 private var aa38:a38;
+		 private var aa39:a39;
+		 private var aa40:a40;
+		 private var aa41:a41;
+		 private var aa42:a42;
+		 private var aa43:a43;
+		 private var aa44:a44;
+		 private var aa45:a45;
+		 private var aa46:a46;
+		 private var aa47:a47;
+		 private var aa48:a48;
+		 private var aa49:a49;
+		 private var aa50:a50;
+		 private var aa51:a51;
+		 private var aa52:a52;
+		 private var aa53:a53;
+		 private var aa54:a54;
+		 private var aa55:a55;
+		 private var aa56:a56;
+		 private var aa57:a57;
+		 private var aa58:a58;
+		 private var aa59:a59;
+		 private var aa60:a60;
+		 private var aa61:a61;
+		 private var aa62:a62;
+		 private var aa63:a63;
+		 private var aa64:a64;
+		 private var aa65:a65;
+		 private var aa66:a66;
+		 private var aa67:a67;
+		 private var aa68:a68;
+		 private var aa69:a69;
+		 private var aa70:a70;
+		 private var aa71:a71;
+		 private var aa72:a72;
+		 private var aa73:a73;
+		 private var aa74:a74;
+		 private var aa75:a75;
+		 private var aa76:a76;
+		 private var aa77:a77;
+		 private var aa78:a78;
+		 private var aa79:a79;
+		 private var aa80:a80;
+		 private var aa81:a81;
+		 private var aa82:a82;
+		 private var aa83:a83;
+		 private var aa84:a84;
+		 private var aa85:a85;
+		 private var aa86:a86;
+		 private var aa87:a87;
+		 private var aa88:a88;
+		 private var aa89:a89;
+		 private var aa90:a90;
+		 private var aa91:a91;
+		 private var aa92:a92;
+		 private var aa93:a93;
+		 private var aa94:a94;
+		 private var aa95:a95;
+		 private var aa96:a96;
+		 private var aa97:a97;
+		 private var aa98:a98;
+		 private var aa99:a99;
+		 private var aa100:a100;
+		 private var aa101:a101;
+		 private var aa102:a102;
+		 private var aa103:a103;
+		 private var aa104:a104;
+	}
+}

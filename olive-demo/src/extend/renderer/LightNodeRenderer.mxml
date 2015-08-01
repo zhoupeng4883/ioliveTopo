@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+类似于AlarmNodeRenderer不同的呈现，用于呈现设备的状态
+-->
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.utils.UIUtils;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalAlign;
+			import flash.filters.BitmapFilterQuality;
+			
+			
+			[Bindable]
+			public var alarm_Color:uint = 0x00FF00;
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:LightNodeRenderer = new LightNodeRenderer();
+				copyProperties(renderer);
+				return renderer;
+			}
+			
+			/**
+			 * 重写data方法，根据告警级别渲染不同颜色
+			 */ 
+			override public function set data(value:Object):void{
+				super.data = value;
+				if(value is GroupedNode){
+					return ;
+				}
+				refreshUI();
+			}
+			
+			/**
+			 * 使UI根据模型进行绘制
+			 */ 
+			private function refreshUI():void{
+				switch(node.data.alarm_level){
+					case 1:	
+						alarm_Color = 0x0000FF;//1级告警蓝色
+						break;
+					case 2:
+						alarm_Color = 0xFFFF00;//2级告警黄色
+						break;
+					case 3:
+						alarm_Color = 0xFF0000;//三级告警红色,三级告警时，红色闪光特效显示
+						animateEff.target = this.light;
+						animateEff.play();
+						break;
+					default:
+						alarm_Color = 0x00FF00;//0级告警绿色
+						break;
+				}
+			}
+			
+			/**
+			 * 根据Data强制刷新Ui内部构造
+			 */ 
+			override public function refreshUiFormData():void{
+				refreshUI();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:GradientGlowFilter id="glow" quality="{flash.filters.BitmapFilterQuality.HIGH}">
+			<s:entries>
+				<s:GradientEntry color="0xFF0000" ratio="0" alpha="0"/>
+				<s:GradientEntry color="0xFF0000" ratio="128" alpha="0.75"/>
+				<s:GradientEntry color="0xFF0000" ratio="255" alpha="0.5"/>
+			</s:entries>
+		</s:GradientGlowFilter>
+		<s:AnimateFilter id="animateEff" bitmapFilter="{glow}" duration="1000" repeatDelay="500" repeatBehavior="reverse">
+			<s:motionPaths>
+				<s:SimpleMotionPath property="strength" valueFrom="0" valueTo="10"/>
+				<s:SimpleMotionPath property="blurX" valueFrom="4" valueTo="32"/>
+				<s:SimpleMotionPath property="blurY" valueFrom="4" valueTo="32"/>
+			</s:motionPaths>
+		</s:AnimateFilter>
+	</fx:Declarations>
+	<olive:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</olive:layout>
+	<s:Group id="content" width="100%" height="100%">
+		<s:Image id="img" source="{data.data.icon}" x="10" y="10" visible="{data.data.icon != null}"/>
+		<s:Ellipse  width="10" height="10" x="0" y="0" id="light" visible="{data.data.icon != null}">
+			<s:fill>
+				<s:LinearGradient rotation="45">
+					<s:GradientEntry color="0xFFFFFF"/>
+					<s:GradientEntry color="{alarm_Color}"/>
+				</s:LinearGradient>
+			</s:fill>
+		</s:Ellipse>
+	</s:Group>
+	<s:Label id="lab" text="{data.text}" fontSize="12"/>
+</olive:AbstractNodeRenderer>

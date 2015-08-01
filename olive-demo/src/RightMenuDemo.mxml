@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+给画布、节点、连线自定义右键菜单的例子。
+关于右键菜单支持，Olive 套件开发及运行环境需要Flash Player 11.2以上，并且开发环境编译参数-swf-version至少15以上，关于编译参数-swf-version请参见http://zengrong.net/post/1486.htm
+通过禁用画布默认右键菜单(showDefaultGraphRightMenu=false),并监听画布鼠标右击事件(graphRightClick)为画布添加自定义右键菜单;
+通过禁用节点默认右键菜单(showDefaultNodeRightMenu=false),并监听节点鼠标右击事件(nodeRightClick)为节点添加自定义右键菜单;
+通过禁用连线默认右键菜单(showDefaultArcRightMenu=false),并监听线段的鼠标右击事件(arcRightClick)为线段添加自定义右键菜单;
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()" pageTitle="为画布、节点、连线自定义右键菜单示例"
+			   viewSourceURL="srcview/index.html">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphArcEvent;
+			import com.iolive.topology.events.GraphNodeEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphArc;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			
+			import mx.controls.Menu;
+			import mx.events.MenuEvent;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private var menu:Menu;
+			
+			[Embed(source='/assets/light.png')]
+			private var menuItemIcon:Class;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/IconDemo.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+			}
+			
+			/**
+			 * 监听画布右击事件，弹出自定义右键菜单
+			 */ 
+			protected function graphRightClickHandler(event:Event):void
+			{
+				if(menu != null){
+					menu.hide();
+					menu = null;
+				}
+				var datas:Array = [];
+				datas.push({label:"画布菜单项1",icon:menuItemIcon});
+				datas.push({label:"画布菜单项2",icon:menuItemIcon});
+				datas.push({label:"画布菜单项3",icon:menuItemIcon});
+				datas.push({label:"画布菜单项4",icon:menuItemIcon});
+				menu = Menu.createMenu(graph,datas);
+				menu.show(mouseX,mouseY);
+				menu.addEventListener(MenuEvent.ITEM_CLICK,menuItemClick);
+				//右键菜单响应
+				function menuItemClick(ev:MenuEvent):void{
+					AlertTitle.showTip("项:"+ev.item.label);
+				}
+			}
+			
+			/**
+			 * 监听nodeRightClick自定义显示右键菜单
+			 */ 
+			protected function nodeRightClickHandler(event:GraphNodeEvent):void{
+				if(menu != null){
+					menu.hide();
+					menu = null;
+				}
+				menu = Menu.createMenu(graph.nodeToUI(event.node),nodeMenuData(event.node));
+				menu.show(mouseX,mouseY);
+				menu.addEventListener(MenuEvent.ITEM_CLICK,menuItemClick);
+				//右键菜单数据源
+				function nodeMenuData(node:IGraphNode):Array{
+					var datas:Array = [];
+					datas.push({label:"节点菜单项1",icon:menuItemIcon,value:1,node:node});
+					datas.push({label:"节点菜单项2",icon:menuItemIcon,value:2,node:node});
+					datas.push({label:"节点菜单项3",icon:menuItemIcon,value:3,node:node,children:[{label:"节点菜单子项3-1",icon:menuItemIcon,value:31,node:node},{label:"节点菜单子项3-2",icon:menuItemIcon,value:32,node:node}]});
+					datas.push({label:"节点菜单项4",icon:menuItemIcon,value:4,node:node,enabled:false});
+					return datas;
+				}
+				//右键菜单响应
+				function menuItemClick(ev:MenuEvent):void{
+					AlertTitle.showTip("项:"+ev.item.label+"\nvalue="+ev.item.value+"\nnode="+ev.item.node.text);
+				}
+			}
+			
+			/**
+			 * 监听arcRightClick自定义右键菜单显示
+			 */ 
+			protected function arcRightClickHandler(event:GraphArcEvent):void
+			{
+				if(menu != null){
+					menu.hide();
+					menu = null;
+				}
+				menu = Menu.createMenu(graph.arcToUI(event.arc),arcMenuData(event.arc));
+				menu.show(mouseX,mouseY);
+				menu.addEventListener(MenuEvent.ITEM_CLICK,menuItemClick);
+				//右键菜单数据源
+				function arcMenuData(arc:IGraphArc):Array{
+					var datas:Array = [];
+					datas.push({label:"线段菜单项1",icon:menuItemIcon,value:1,arc:arc});
+					datas.push({label:"线段菜单项2",icon:menuItemIcon,value:2,arc:arc});
+					datas.push({label:"线段菜单项3",icon:menuItemIcon,value:3,arc:arc,children:[{label:"线段菜单子项3-1",icon:menuItemIcon,value:31,arc:arc},{label:"线段菜单子项3-2",icon:menuItemIcon,value:32,arc:arc}]});
+					datas.push({label:"线段菜单项4",icon:menuItemIcon,value:4,arc:arc,enabled:false});
+					return datas;
+				}
+				//右键菜单响应
+				function menuItemClick(ev:MenuEvent):void{
+					AlertTitle.showTip("项:"+ev.item.label+"\nvalue="+ev.item.value+"\narc="+ev.item.arc.type);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		olive|AbstractArcRenderer{
+			normalLineThickness:5;
+			normalLineStyle:dashed;
+			overLineThickness:6;
+			selectedLineThickness:6;
+		}
+	</fx:Style>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new ImageNodeRenderer('icon')}" 
+						  showDefaultGraphRightMenu="false" showDefaultNodeRightMenu="false"
+						  showDefaultArcRightMenu="false"
+						  graphRightClick="graphRightClickHandler(event)"
+						  nodeRightClick="nodeRightClickHandler(event)" 
+						  arcRightClick="arcRightClickHandler(event)"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

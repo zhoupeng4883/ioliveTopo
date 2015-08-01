@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" 
+			   implements="com.iolive.topology.controls.IControl" close="this.visible = false;" creationPolicy="all"
+			   creationComplete="init(event)" title="设置背景地图呈现">
+	<fx:Script>
+		<![CDATA[
+			import com.esri.ags.Map;
+			import com.esri.ags.events.PanEvent;
+			import com.esri.ags.events.ZoomEvent;
+			import com.esri.ags.geometry.MapPoint;
+			import com.esri.ags.layers.Layer;
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.GraphBackGroundType;
+			import com.iolive.topology.consts.ShapeBackGroundType;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			
+			import flash.utils.setTimeout;
+			
+			import mx.controls.Alert;
+			import mx.core.IVisualElementContainer;
+			import mx.core.UIComponent;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import mx.graphics.BitmapFill;
+			import mx.graphics.BitmapFillMode;
+			
+			import spark.events.IndexChangeEvent;
+			import spark.primitives.supportClasses.FilledElement;
+			
+			import extend.layers.MapLayer;
+			import extend.layers.MapLayerType;
+			
+			private var _graph:IGraph;
+			private var map:Map;
+			
+			public function set graph(value:IGraph):void{
+				this._graph = value;
+			}
+			
+			public function get graph():IGraph{
+				return this._graph;
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				map = new Map();
+			 	map.zoomSliderVisible = false;
+				map.logoVisible = false;
+				map.scaleBarVisible = false;
+				//map.scrollWheelZoomEnabled = false;
+			//	map.mapNavigationEnabled = false;
+				//map.rubberbandZoomEnabled = false;
+				//map.clickRecenterEnabled = false;
+				//map.doubleClickZoomEnabled = false;
+			//	map.panEnabled = false;  
+				map.extent = MapLayerType.china_extent;
+				for(var i:int = 0 ; i < list.dataProvider.length; i ++){
+						var layObj:Object = list.dataProvider.getItemAt(i);
+						var layer:MapLayer = new MapLayer(layObj.label);
+						layer.name = layObj.label;
+						if(i > 0){
+							layer.visible = false;
+						}
+						map.addLayer(layer);
+				}
+				graph.drawLayer.visible = false;
+				graph.drawLayer.includeInLayout = false;
+				graph.backgroundContainer.mouseChildren = true;
+				graph.backgroundContainer.mouseEnabled = true;
+				graph.backgroundContainer.addElementAt(map,0);
+				map.addEventListener(PanEvent.PAN_END,resetNodePos);
+				map.addEventListener(ZoomEvent.ZOOM_END,resetNodePos);
+				setTimeout(setNodeMapPoint,1000);
+			}
+			
+			private function setNodeMapPoint():void{
+				var nodes:Array = graph.model.nodes;
+				for each(var node:IGraphNode in nodes){
+					node.data.mappoint = map.toMap(new Point(node.x,node.y)); 
+				}
+			}
+			
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return "背景地图设置";
+			}
+			
+			protected function mapChanger(event:IndexChangeEvent):void
+			{
+				for each(var layer:Layer in map.layers){
+					if(layer.name == list.selectedItem.label){
+						layer.visible = true;
+					}else{
+						layer.visible = false;
+					}
+				}
+			}
+			
+			protected function resetNodePos(event:Event = null):void{
+				var nodes:Array = graph.model.nodes;
+				for each(var node:IGraphNode in nodes){
+					var mpoint:MapPoint = node.data.mappoint as MapPoint;
+					var p:Point = map.toScreen(mpoint);
+					node.setLocation(p.x,p.y,true);
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:List width="100%" height="100%" id="list" change="mapChanger(event)" selectedIndex="0" horizontalCenter="0" verticalCenter="0">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="3" requestedRowCount="2" paddingTop="5" paddingLeft="10"/>
+		</s:layout>
+		<s:dataProvider>
+			<s:ArrayList>
+				<fx:Object label="{MapLayerType.GOOGLE_VECTOR}" icon="assets/map/google_vector.jpg" />
+				<fx:Object label="{MapLayerType.GOOGLE_TERRAIN}" icon="assets/map/google_terrain.jpg"/>
+				<fx:Object label="{MapLayerType.GOOGLE_IMAGE}" icon="assets/map/google_image.jpg"/>
+				<fx:Object label="{MapLayerType.NOKIA_VECTOR}" icon="assets/map/nokia_vector.jpg"/>
+				<fx:Object label="{MapLayerType.NOKIA_TERRAIN}" icon="assets/map/nokia_terrain.jpg"/>
+				<fx:Object label="{MapLayerType.NOKIA_IMAGE}" icon="assets/map/nokia_image.jpg"/>
+			</s:ArrayList>
+		</s:dataProvider>
+		<s:itemRenderer>
+			<fx:Component>
+				<s:ItemRenderer>
+					<s:VGroup horizontalAlign="center">
+						<s:Image source="{data.icon}"/>
+						<s:Label text="{data.label}"/>
+					</s:VGroup>
+				</s:ItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+		 
+</s:TitleWindow>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="init()"
+			   pageTitle="放射状布局示例"
+			   xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import flash.filters.BitmapFilterQuality;
+			
+			import mx.graphics.BitmapFillMode;
+			import mx.graphics.GradientEntry;
+			
+			import sample.SimpleXmlGraphModel;
+			
+			import spark.effects.AnimateFilter;
+			import spark.effects.Rotate3D;
+			import spark.effects.animation.MotionPath;
+			import spark.effects.animation.RepeatBehavior;
+			import spark.effects.animation.SimpleMotionPath;
+			import spark.filters.GradientGlowFilter;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				var colorProvider:IColorProvider = graph.nodeRenderer.colorProvider;
+				
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/MatrixDemoStar.xml";
+				graph.model = model;
+				//var arcRenderer:SimpleBrokenLineRenderer=new SimpleBrokenLineRenderer();
+				//new SimpleLabelPlusIconNodeRenderer(showPlusIcon);
+				//graph.arcRenderer=arcRenderer;
+				graph.arcRenderer.colorProvider=colorProvider;
+				
+				 model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					 function(event:GraphXMLModelEvent):void{
+						// graph.runLayout();
+						 
+						 nodeEffect("BTS1");
+						 nodeEffect("BTS2");
+						 nodeEffect("BTS3");
+						 
+						 //设置3D旋转特效
+						 var wx:IGraphNode = model.getNodeByName("BSC");
+						 var ra3D:Rotate3D = new Rotate3D();
+						 ra3D.angleXFrom = 15;
+						 ra3D.angleYFrom = 15;
+						 ra3D.angleZFrom = 15;
+						 graph.setNodeEffect(wx,ra3D);
+						 
+						 //使用eff.stop()方法停止特效播放
+						 //更多Flex特效请参见Google.com
+					 });
+				 graph.setBackgroundImag("assets/background/_bg_star.jpg",BitmapFillMode.SCALE);
+			}
+			private function nodeEffect(arcText:String):void{
+				var internet:IGraphNode = model.getNodeByName(arcText);
+				var glow:spark.filters.GradientGlowFilter = new GradientGlowFilter();
+				glow.quality = flash.filters.BitmapFilterQuality.HIGH;
+				glow.entries = [new GradientEntry(0xFF0000,0,0),new GradientEntry(0xFF0000,128,0.75),new GradientEntry(0xFF0000,255,0.75)];
+				var glower:AnimateFilter = new AnimateFilter();
+				glower.bitmapFilter = glow;
+				glower.duration= 500;
+				glower.repeatDelay = 500;
+				glower.repeatCount = 50;
+				glower.repeatBehavior = RepeatBehavior.REVERSE;
+				var vec:Vector.<MotionPath> = new Vector.<MotionPath>();
+				vec.push(new SimpleMotionPath("strength",0,10));
+				vec.push(new SimpleMotionPath("blurX",4,32));
+				vec.push(new SimpleMotionPath("blurY",4,32));
+				glower.motionPaths = vec;
+				graph.setNodeEffect(internet,glower);
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%"  showArcLabels="true"  renderFlowText="true" nodeRenderer="{new ImageNodeRenderer('icon')}" />
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

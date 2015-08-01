@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+扩展渲染器基类，实现复合节点渲染器
+可根据需要去掉不需要功能
+-->
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive"
+							creationComplete="init(event)" 
+							xmlns:designs="designs.*">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.shape.Aquarium;
+			import com.iolive.topology.shape.BaseShape;
+			import com.iolive.topology.ui.alert.AlertTitle;
+			import com.iolive.topology.utils.GraphicsUtils;
+			import com.iolive.topology.utils.UIUtils;
+			
+			import flash.utils.getDefinitionByName;
+			
+			import mx.controls.Alert;
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Image;
+			import spark.core.SpriteVisualElement;
+			import spark.layouts.BasicLayout;
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalAlign;
+			import spark.layouts.VerticalLayout;
+			
+			/**
+			 * 是否显示Label
+			 */ 
+			[Bindable]
+			private var showLabel:Boolean = true;
+			/**
+			 * label显示位置:center、left、right、top、bottom
+			 */ 
+			private var labelPosition:String = "center";
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:CompositeRenderer = new CompositeRenderer();
+				copyProperties(renderer);
+				return renderer;
+			}
+			
+			/**
+			 * 重写set data使其控制属性生效
+			 */ 
+			override public function set data(value:Object):void{
+				super.data = value;
+				if(value is GroupedNode){
+					showLabel=false;
+					return;
+				}
+				if(data && data.data){
+					showLabel = data.data.showLabel;
+					if(!data.text)showLabel=false;
+					dropShadow = data.data.dropShadow;
+				}
+			}
+			
+			/**
+			 * 重写createChildren，根据data添加对应的显示对象
+			 */ 
+			override protected function createChildren():void{
+				super.createChildren();
+				if(node && node.data){
+					switch(node.data.type){
+						case "image":
+						{
+							createImage();
+							break;
+						}
+						case "shape":
+						{
+							createShape();
+							break;
+						}
+						case "component":
+						{
+							createComponent();
+							break;
+						}
+						case "fxg":
+						{
+							createFxg();
+							break
+						}
+						default:
+						{
+							break;
+						}
+					}
+				}
+				labelChanger();
+			}
+			
+			/**
+			 * 重写refreshUiFormData,在data发生变化时，显式调用属性更改.
+			 */ 
+			override public function refreshUiFormData():void{
+				setCententClassSize();
+				labelChanger();
+			}
+			
+			
+			/**
+			 * 设置图片、矢量图形、Fxg、组件大小,
+			 * 如果显示了Label，对label进行显示的宽高计算
+			 */ 
+			private function setCententClassSize():void{
+				for(var i:int = content.numElements - 1; i >= 0; i -- ){
+					var comp:* = content.getElementAt(i);
+					if(!(comp is Label)){
+						comp.width = this.width;
+						comp.height = this.height;
+						if(this.lab && this.lab.visible){
+							var labWidth:Number = lab.width;
+							var labHeight:Number = lab.height;
+							if(labelPosition == "left" || labelPosition == "right"){
+								comp.width = width - labWidth;
+							}else if(labelPosition == "top" || labelPosition == "bottom"){
+								comp.height = height - labHeight;
+							} 
+						}
+						break;
+					}
+				}
+			}
+			 
+			/**
+			 * 创建icon显示器
+			 */ 
+			protected function createImage():void{
+				var img:Image = new Image();
+				img.source = node.data.icon;
+				content.addElementAt(img,0);
+			}
+			
+			/**
+			 * 创建矢量显示器
+			 */ 
+			protected function createShape():void{
+				 var cls:Class = getDefinitionByName(node.data['class']) as Class;
+				 var shape:BaseShape = new cls();
+				 shape.width = node.data.width;
+				 shape.height = node.data.height;
+				 content.addElementAt(shape,0);
+			}
+			
+			/**
+			 * 创建自定义组件
+			 */ 
+			protected function createComponent():void{
+				try{
+					var cls:Class = getDefinitionByName(node.data['class']) as Class;
+					var comp:IVisualElement = new cls();
+					comp.width = node.data.width;
+					comp.height = node.data.height;
+					content.addElementAt(comp,0);
+				}catch(e:Error){
+					//AlertTitle.showTip("检查class是否已经在IncludeClass中注册");
+				}
+			}
+			
+			/**
+			 * 创建Fxg对象
+			 */ 
+			protected function createFxg():void{
+				var cls:Class = getDefinitionByName(node.data['class']) as Class;
+				var comp:SpriteVisualElement = new cls();
+				comp.width = node.data.width;
+				comp.height = node.data.height;
+				content.addElementAt(comp,0);
+			}
+			
+			/**
+			 *初始化方法 
+			 */
+			protected function init(event:FlexEvent):void{
+				initEvent();
+			}
+			
+			/**
+			 * 初始化事件监听
+			 */ 
+			private function initEvent():void{
+				addEventListener(DesignEvent.nodeSelected,selectedHanlder);
+				addEventListener(DesignEvent.nodeUnSelected,unSelectedHanlder);
+				
+				//当节点选中时,在节点四周渲染出四个marker
+				function selectedHanlder(event:DesignEvent):void{
+					 currentState = "selected";
+				}
+				
+				//节点取消选中时
+				function unSelectedHanlder(event:DesignEvent):void{
+					currentState = "normal";
+				}
+			}
+			
+			/**
+			 * 鼠标移入到Marker上时，向上层抛出markerMouseOver
+			 */ 
+			protected function markerClickHanlder(event:MouseEvent):void{
+				dispatchEvent(new DesignEvent(DesignEvent.markerMouseClick,node,this));
+				event.stopImmediatePropagation();
+			}
+			
+			
+			/**
+			 * Label的摆放位置
+			 */ 
+			private function labelChanger():void{
+				if(showLabel && node.data 
+					&& node.data.hasOwnProperty("labelposition")){
+					var position:String = node.data["labelposition"];
+					labelPosition = position;
+					switch(position)
+					{
+						case "left":
+						{
+							var hor:HorizontalLayout = new HorizontalLayout();
+							hor.gap = 0;
+							hor.verticalAlign = VerticalAlign.MIDDLE;
+							content.layout = hor;
+							content.setElementIndex(lab,0);
+							break;
+						}
+						case "right":
+						{
+							var layout:HorizontalLayout = new HorizontalLayout();
+							layout.gap = 0;
+							layout.verticalAlign = VerticalAlign.MIDDLE;
+							content.layout = layout;
+							if(content.numElements > 1)content.setElementIndex(lab,1);
+							break;
+						}
+						case "top":
+						{
+							var topL:VerticalLayout = new VerticalLayout();
+							topL.horizontalAlign = HorizontalAlign.CENTER;
+							content.layout = topL;
+							content.setElementIndex(lab,0);
+							break;
+						}
+						case "bottom":{
+							var l:VerticalLayout = new VerticalLayout();
+							l.horizontalAlign = HorizontalAlign.CENTER;
+							content.layout = l;
+							if(content.numElements > 1)content.setElementIndex(lab,1);
+							break;
+						}
+						case "center":{
+							content.layout =  new BasicLayout();
+							if(content.numElements > 1)content.setElementIndex(lab,1);
+							lab.verticalCenter = 0;
+							lab.horizontalCenter = 0;
+							break;
+						}
+						default:
+						{
+							
+							break;
+						}
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<olive:states>
+		<s:State name="normal"/>
+		<s:State name="selected"/>
+	</olive:states>
+	<olive:layout>
+		<s:BasicLayout/>
+	</olive:layout>
+	<s:Group width="100%" height="100%" id="content">
+		<s:Label id="lab" text="{data.text}" visible="{showLabel}" 
+				 includeInLayout="{showLabel}" horizontalCenter="0" verticalCenter="0" styleName="compositeRendererLabel"/>
+	</s:Group>
+	<s:Group width="100%" height="100%" includeIn="selected" >
+		<designs:Marker horizontalCenter="0" verticalCenter="0" click="markerClickHanlder(event)" buttonMode="true" includeIn="selected"/>
+	</s:Group>
+</olive:AbstractNodeRenderer>

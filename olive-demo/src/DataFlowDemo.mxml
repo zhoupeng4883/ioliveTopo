@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+体现线上数据流动的例子。
+
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()" 
+			   viewSourceURL="demo/index.html">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.AbstractNodeRenderer;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			
+			import extend.renderer.AlarmNodeRenderer;
+			import extend.renderer.LightNodeRenderer;
+			import extend.renderer.WaterLineArcRenderer;
+			
+			import flash.utils.setInterval;
+			
+			import sample.SimpleXmlGraphModel;
+			private var model:SimpleXmlGraphModel;
+			
+			private function init():void {
+				model = new SimpleXmlGraphModel();
+				model.url = "xml/AlarmRenderer.xml";
+				graph.model = model;
+				model.addEventListener(GraphXMLModelEvent.XMLMODEL_ADDED,
+					function(event:GraphXMLModelEvent):void{
+						graph.runLayout();
+					});
+				setInterval(function():void{
+					alarmCreate();
+				},5000);
+				graph.setBackgroundColor(0x000000);
+			}
+			
+			/**
+			 * 随机数模拟告警数量及等级
+			 */ 
+			public function alarmCreate():void{
+				for(var i:int = 0, size:int = model.nodes.length; i < size; i ++){
+					var node:IGraphNode = model.nodes[i];
+					node.data.alarm_num = random(0,15);
+					node.data.alarm_level = random(0,4);
+					(graph.nodeToUI(node) as INodeRenderer).refreshUiFormData();
+				}
+			}
+			
+			/**
+			 * 取两个数值之间随机数
+			 */ 
+			private function random(min:int,max:int):int{
+				return Math.round(Math.random() * (max - min)) + min;  
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace olive "Library://com.olive.core/flex/olive";
+		@namespace renderer "extend.renderer.*";
+		renderer|LightNodeRenderer{
+			normalBackgroundAlpha :0;
+			normalBorderAlpha:0;
+			overBackgroundAlpha:0;
+			selectedBackgroundAlpha:0;
+			color:#FFFFFF;
+			fontWeight:bold;
+		}
+		olive|AbstractArcRenderer{
+			normalLineThickness:2;
+			normalLineColor:#08CB13;
+			overLineThickness:2;
+			overLineColor:#08CB13;
+			selectedLineColor:#08CB13;
+			selectedLineThickness:2;
+			selectedGlowEnabled:false;
+		}
+	</fx:Style>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" nodeRenderer="{new LightNodeRenderer()}" arcRenderer="{new WaterLineArcRenderer()}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

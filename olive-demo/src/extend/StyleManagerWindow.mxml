@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" 
+			   implements="com.iolive.topology.controls.IControl" 
+			   close="titlewindow1_closeHandler(event)" creationPolicy="all"
+			   title="画布背景设置" xmlns:extend="extend.*">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			
+			import mx.events.CloseEvent;
+			[Bindable]
+			private var _graph:IGraph;
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				this.visible = false;
+			}
+			public function get controlName():String{
+				return "背景设置";
+			}
+			public function set graph(value:IGraph):void{
+				this._graph = value;
+			}
+			
+			public function get graph():IGraph{
+				return this._graph;
+			}
+		]]>
+	</fx:Script>
+	<extend:GraphBackgroundStyleView id="view" graph="{_graph}"/>
+</s:TitleWindow>

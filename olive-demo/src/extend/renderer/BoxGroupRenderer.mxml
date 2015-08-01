@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<olive:AbstractGroupNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							  xmlns:s="library://ns.adobe.com/flex/spark" 
+							  xmlns:mx="library://ns.adobe.com/flex/mx" 
+							  xmlns:olive="Library://com.olive.core/flex/olive" 
+							  width="300" height="300">
+	<fx:Declarations>
+	</fx:Declarations>
+	<olive:Rect width="200" height="200" rotation="45" x="120">
+		<olive:fill>
+			<s:LinearGradient rotation="45">
+				<s:GradientEntry color="0xEE00FF" alpha="0.1"/>
+				<s:GradientEntry color="0xEFEFEF" alpha="0.1"/>
+			</s:LinearGradient>
+		</olive:fill>
+	</olive:Rect>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphItemEvent;
+			import com.iolive.topology.model.GroupedNode;
+			
+			import mx.events.FlexEvent;
+			/**
+			 * 子类衍生时必须重写
+			 */ 
+			override public function newInstance():*{
+				var inst:BoxGroupRenderer = new BoxGroupRenderer();
+				copyProperties(inst);
+				return inst;
+			}
+		]]>
+	</fx:Script>
+</olive:AbstractGroupNodeRenderer>

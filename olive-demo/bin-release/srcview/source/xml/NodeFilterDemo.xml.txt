@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<graph>
+  <node id="1" text="云" tooltip="云" type="入口"  icon="assets/topo/cloud.gif"/>
+  <node id="2" text="internet网关" tooltip="internet网关" type="入口"  icon="assets/topo/internet.png"/>
+  <node id="3" text="卫星电话发射器" tooltip="卫星电话发射器" type="入口"  icon="assets/topo/satelite.png"/>
+  <node id="4" text="无线路由" tooltip="无线路由" type="入口"  icon="assets/topo/wireless.png"/>
+  <node id="5" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="6" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="7" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="8" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="9" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="10" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png"/>
+  <node id="11" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png"/>
+  <node id="12" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png"/>
+  <node id="13" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png"/>
+  <node id="14" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png"/>
+  <node id="15" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png"/>
+  <node id="16" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png"/>
+  <node id="17" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png"/>
+  <node id="18" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png"/>
+  <node id="19" text="文件服务器" tooltip="文件服务器" type="服务器"  icon="assets/topo/IBM-Server.png"/>
+  <node id="20" text="数据库服务器" tooltip="数据库服务器" type="服务器"  icon="assets/topo/database.png"/>
+  <arc id="100" type="connectedTo" tooltip="" source="1" destination="2" selected="true" directed="false" />
+  <arc id="101" type="connectedTo" tooltip="" source="1" destination="3" />
+  <arc id="102" type="undirected" tooltip="" source="2" destination="4" />
+  <arc id="103" type="undirected" tooltip="" source="2" destination="5" />
+  <arc id="104" type="undirected" tooltip="" source="2" destination="6" />
+  <arc id="105" type="undirected" tooltip="" source="2" destination="7" />
+  <arc id="106" type="undirected" tooltip="" source="2" destination="8" />
+  <arc id="107" type="undirected" tooltip="" source="2" destination="9" />
+  <arc id="108" type="undirected" tooltip="" source="2" destination="10" />
+  <arc id="109" type="undirected" tooltip="" source="3" destination="16" />
+  <arc id="110" type="undirected" tooltip="" source="3" destination="17" />
+  <arc id="111" type="undirected" tooltip="" source="3" destination="18" />
+  <arc id="112" type="undirected" tooltip="" source="4" destination="11" />
+  <arc id="113" type="undirected" tooltip="" source="4" destination="12" />
+  <arc id="114" type="undirected" tooltip="" source="4" destination="13" />
+  <arc id="115" type="undirected" tooltip="" source="4" destination="14" />
+  <arc id="116" type="undirected" tooltip="" source="4" destination="15" />
+  <arc id="117" type="undirected" tooltip="" source="2" destination="19" />
+  <arc id="118" type="undirected" tooltip="" source="2" destination="20"/>
+</graph>

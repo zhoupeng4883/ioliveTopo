@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="200">
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:Rect left="0" right="0" top="0" bottom="0">
+		<s:stroke>
+			<s:SolidColorStroke color="0x8EA3BE"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="0xFFFFFF"/>
+		</s:fill>
+	</s:Rect>
+	<s:Rect left="2" right="2" top="2" height="25">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x8EA3BE"/>
+				<s:GradientEntry color="0xFFFFFF"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Label text="自定义组件作为节点,如用于流程图" fontWeight="bold" x="5" y="5"/>
+	<s:RichText x="10" y="30">
+		<s:br/>
+		<s:br/>
+		<s:br/>
+		<s:span fontSize="15">Iolive Topology Components</s:span>
+		<s:br/>
+		<s:a href="http://iolive.duapp.com" color="0xFFFF00" target="_blank">打开</s:a>
+	</s:RichText>
+</s:Group>

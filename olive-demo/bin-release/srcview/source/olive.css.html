@@ -1,0 +1,354 @@
+<!-- saved from url=(0014)about:internet -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>olive.css</title>
+<link rel="stylesheet" type="text/css" href="../SourceStyles.css"/>
+</head>
+
+<body><pre><span class="CSSComment">/* Default CSS file for FlexViz */</span>
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">s </span><span class="CSSString">"library://ns.adobe.com/flex/spark"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">mx </span><span class="CSSString">"library://ns.adobe.com/flex/mx"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">ui </span><span class="CSSString">"com.iolive.topology.ui.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">dividedbox </span><span class="CSSString">"com.iolive.topology.ui.dividedbox.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">renderers </span><span class="CSSString">"com.iolive.topology.renderers.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">controls </span><span class="CSSString">"com.iolive.topology.controls.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">search </span><span class="CSSString">"com.iolive.topology.search.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">renderers1 </span><span class="CSSString">"com.iolive.topology.ui.renderers.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">handler </span><span class="CSSString">"com.iolive.topology.handler.*"</span>;
+<span class="CSS@namespace">@namespace</span> <span class="CSSSelector">ns </span><span class="CSSString">"Library://com.olive.core/flex/olive"</span>;
+
+<span class="CSSComment">/* OliveGraph */</span>
+<span class="CSSSelector">controls|DefaultToolBar </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">skinClass</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">ClassReference(</span><span class="CSSString">"skins.control.DefaultControlBarSkin"</span><span class="CSSProperty_Value">)</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">controls|SearchBar</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">skinClass</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">ClassReference(</span><span class="CSSString">"skins.control.DefaultControlBarSkin"</span><span class="CSSProperty_Value">)</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">.whitebg </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">background-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">background-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#ffffff</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.nobg </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">background-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/** 画布标题Label默认样式名称 **/</span>
+<span class="CSSSelector">.oliveGraphHeaderLabel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#000000</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">fontSize</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">15</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">horizontal-center</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingTop</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">20</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+
+<span class="CSSComment">/** 画布底部Label **/</span>
+<span class="CSSSelector">.oliveGraphFooterLabel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">bottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">16</span><span class="CSSDelimiters">;</span>        <span class="CSSComment">/* 去除滚动条的位置  */</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#bbbbbb</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">fontSize</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">12</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">fontWeight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">horizontalCenter</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">.layoutsComboBox </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">paddingLeft</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">4</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingRight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">arrowButtonWidth</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">18</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.buttonBar </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">button-height</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">22</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">button-width</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">24</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">height</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">22</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.searchResultsLabel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#444444</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.searchResultsLabelError </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#cc0000</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/* Node and arc renderers  */</span>
+
+<span class="CSSSelector">renderers|SimpleLabelNodeRenderer </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">horizontal-align</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span> 
+    <span class="CSSProperty_Name">horizontal-gap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">vertical-gap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">normal-border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#5E6162</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalBorderStyle</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">none</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">over-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.1</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">selected-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.1</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">matching-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#00DD00</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-font-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">italic</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|SimpleLabelPlusIconNodeRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">horizontal-align</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span> 
+    <span class="CSSProperty_Name">horizontal-gap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">vertical-gap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">normal-border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#5E6162</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">over-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">selected-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">matching-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#00DD00</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-font-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">italic</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|ImageNodeRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normal-border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSString">"none"</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalBorderStyle</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">none</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">over-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    
+    <span class="CSSProperty_Name">selected-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">matching-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#00DD00</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-font-style</span><span class="CSSDelimiters">:</span> <span class="CSSString">"微软雅黑"</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matchingBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|SimpleShapeNodeRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normal-border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normal-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSString">"none"</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalBorderStyle</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">none</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">over-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">over-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">selected-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#009DFF</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selected-font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#D7E3F0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    
+    <span class="CSSProperty_Name">matching-border-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#00DD00</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matching-font-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">italic</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">matchingBackgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|NodeText </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">textAlign</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|AbstractArcRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normalLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">renderers|SimpleArrowHeadArcRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normalLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">renderers|SimpleDoubleArrowHeadArcRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normalLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">renderers|SimpleCircleMarkArcRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normalLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">renderers|SimpleBrokenLineRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">normalLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">overLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">selectedLineThickness</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">normalLineColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#C0C0C0</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">renderers|ArcLabel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">font-size</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">11</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">text-align</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/* Filter Panels */</span>
+
+<span class="CSSSelector">.filterSelected </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#000000</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.filterUnselected </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#999999</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.rotateArcLabels </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">disabled-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#666666</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/* Progress Panel */</span>
+
+<span class="CSSSelector">.progressPanel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">cornerRadius</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">2</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">roundedBottomCorners</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">false</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderThicknessBottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderThicknessLeft</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderThicknessRight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">horizontalGap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">verticalGap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingLeft</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingRight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingBottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span> 
+    <span class="CSSProperty_Name">horizontalAlign</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">verticalAlign</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">middle</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">horizontalCenter</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">verticalCenter</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">headerHeight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">24</span><span class="CSSDelimiters">;</span>
+    <span class="CSSComment">/*headerColors: #426FD9,#2647A0;*/</span>
+    <span class="CSSProperty_Name">highlightAlphas</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0.1,0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#ffffff</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderAlpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">fontSize</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">11</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+<span class="CSSComment">/* 画布元素默认的背景样式 */</span>
+<span class="CSSSelector">.oliveGraphToolTip </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">borderThickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">1</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderStyle</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">solid</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">verticalGap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">cornerRadius</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">dropShadowEnabled</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">true</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/**
+* 画布元素 ToolTip Label样式
+*/</span>
+<span class="CSSSelector">.oliveGraphToolTipLabel </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+
+<span class="CSSComment">/**
+*框选样式
+*/</span>
+<span class="CSSSelector">ui|MarqueeSelectionComponent </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#ff0000</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">border-thickness</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">3</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">line-style</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">dotted</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">background-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0.5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">background-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#F6FAEB</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">corner-radius</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.alert </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#ffffff</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">rounded-bottom-corners</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">true</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">border-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0.9</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">border-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#869ca7</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">background-alpha</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">0.9</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">background-color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#869ca7</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.black </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#000000</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.panelControlBar </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">horizontal-align</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingTop</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingBottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">horizontalGap</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">2</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+
+<span class="CSSSelector">.nodePropertyFormItem </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">paddingLeft</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingTop</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingRight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">18</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingBottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.nodePropertyFormItemAlt </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">paddingLeft</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingTop</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingRight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">18</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">paddingBottom</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">5</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">backgroundColor</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#f5fafa</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSSelector">.nodePropertyText </span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">#000000</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">font-weight</span><span class="CSSDelimiters">:</span> <span class="CSSProperty_Value">normal</span><span class="CSSDelimiters">;</span>    
+<span class="CSSDelimiters">}</span>
+
+<span class="CSSComment">/**
+*节点缩略图的Checkbox
+*/</span>
+<span class="CSSSelector">renderers|ThumbnailCheckBox</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">skinClass</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">ClassReference(</span><span class="CSSString">"skins.checkbox.ThumbnailCheckBoxSkin"</span><span class="CSSProperty_Value">)</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">ns|AbstractGroupNodeRenderer</span><span class="CSSDelimiters">{</span>
+    <span class="CSSProperty_Name">borderColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#000000</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">borderStyle</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">hatch</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">backgroundAlpha</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">0.2</span><span class="CSSDelimiters">;</span>
+    <span class="CSSProperty_Name">backgroundColor</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#FFFFFF</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span>
+<span class="CSSSelector">.titleLabelStyle</span><span class="CSSDelimiters">{</span>
+     <span class="CSSProperty_Name">textAlign</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">center</span><span class="CSSDelimiters">;</span>
+     <span class="CSSProperty_Name">color</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">#CCCCCC</span><span class="CSSDelimiters">;</span>
+     <span class="CSSProperty_Name">fontWeight</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">bold</span><span class="CSSDelimiters">;</span>
+     <span class="CSSProperty_Name">fontSize</span><span class="CSSDelimiters">:</span><span class="CSSProperty_Value">15</span><span class="CSSDelimiters">;</span>
+<span class="CSSDelimiters">}</span></pre></body>
+</html>

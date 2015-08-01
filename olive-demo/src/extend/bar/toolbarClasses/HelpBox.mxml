@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"  gap="0" xmlns:ui="extend.bar.*" implements="com.iolive.topology.controls.IControl">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.canvas.IGraph;
+			import com.iolive.topology.consts.ControlNames;
+			import com.iolive.topology.ui.HelpWindow;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Application;
+			import spark.components.TitleWindow;
+			
+			
+			public static const  GRAPH_SHOW_HELP_PANEL:String="GRAPH_SHOW_HELP_PANEL";
+			
+			private var popup:HelpWindow;
+			protected function helpBtnClickHandler(event:MouseEvent):void
+			{
+				if (popup && popup.parent) {
+					PopUpManager.removePopUp(popup);
+					popup = null;
+				} else {
+					popup = new HelpWindow();
+					PopUpManager.addPopUp(popup, FlexGlobals.topLevelApplication as DisplayObject, false);
+					PopUpManager.centerPopUp(popup);
+					popup.addEventListener(CloseEvent.CLOSE, function(event:CloseEvent):void {
+						popup.removeEventListener(CloseEvent.CLOSE, arguments.callee);
+						PopUpManager.removePopUp(popup);
+					});
+				}
+			}
+			
+			public function set graph(value:IGraph):void{
+			}
+			
+			public function get graph():IGraph{
+				return null;
+			}
+			
+			/**
+			 * 设置/获取控制器名称
+			 */ 
+			public function get controlName():String{
+				return ControlNames.HELP;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<ui:MetroButton icon="@Embed(source='assets/wp8/pic_29.png')" click="helpBtnClickHandler(event)"/>
+</s:HGroup>

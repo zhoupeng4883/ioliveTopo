@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+通过重写ToolTip的show监听和Create监听，来实现自定义ToolTip
+-->
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive" dropShadow="false" mouseOverEnabled="false">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.events.ToolTipEvent;
+			
+			override public function  newInstance():*{
+				var renderer:ToolTipNodeRenderer = new ToolTipNodeRenderer();
+				copyProperties(renderer);
+				return renderer;
+			}
+			
+			/**
+			 * 覆盖ToolTip创建方法监听
+			 */ 
+			override protected function toolTipCreate(event:ToolTipEvent):void{
+			var tooltip:CustomNodeToolTip = new CustomNodeToolTip();
+			event.toolTip = tooltip;
+			}
+			
+			/**
+			 * 覆盖ToolTip显示方法监听，在方法体中进行数据绑定，可从后台查询实时数据等。
+			 */ 
+			override protected function toolTipShow(event:ToolTipEvent):void{
+				var point:Point  = FlexGlobals.topLevelApplication.graph.nodesLayer.
+				localToGlobal(new Point(this.node.x -40,this.node.y - event.toolTip.height));
+				event.toolTip.x = point.x;
+				event.toolTip.y = point.y;
+				var tip:CustomNodeToolTip = event.toolTip as CustomNodeToolTip;
+				tip.node = node;
+			}
+		]]>
+	</fx:Script>
+	<olive:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</olive:layout>
+	<s:Image id="img" source="@Embed(source='/assets/topo/pc.png')"/>
+</olive:AbstractNodeRenderer>

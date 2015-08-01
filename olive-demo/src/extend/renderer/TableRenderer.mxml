@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<olive:AbstractNodeRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx"
+							xmlns:olive="Library://com.olive.core/flex/olive">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.model.GroupedNode;
+			import com.iolive.topology.renderers.INodeRenderer;
+			import com.iolive.topology.utils.UIUtils;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.layouts.HorizontalAlign;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.VerticalAlign;
+			 
+			
+			/**
+			 * 扩展渲染器必须实现newInstance()方法，渲染器基类AbstractNodeRenderer实现自IFactory
+			 */ 
+			override public function  newInstance():*{
+				var renderer:TableRenderer = new TableRenderer();
+				copyProperties(renderer);
+				return renderer;
+			}
+			
+			/**
+			 * 重写data方法，根据告警级别渲染不同颜色
+			 */ 
+			override public function set data(value:Object):void{
+				super.data = value;
+				datas = new ArrayCollection(node.data.fields.field as Array);
+			}
+		 
+			[Bindable]
+			public var datas:ArrayCollection;
+			 
+		]]>
+	</fx:Script>
+	<olive:layout>
+		<s:VerticalLayout horizontalAlign="center" gap="0"/>
+	</olive:layout>
+	<s:BorderContainer width="100%" height="25" backgroundColor="#8ACF58" borderVisible="false">
+		<s:Label fontWeight="bold" fontSize="15" text="{node.text}" horizontalCenter="0" verticalCenter="0"/>
+	</s:BorderContainer>
+	<s:DataGrid dataProvider="{datas}" borderVisible="false">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn headerText="字段名" dataField="name"/>
+				<s:GridColumn headerText="类型" dataField="dataType"/>
+				<s:GridColumn headerText="长度" dataField="length"/>
+			</s:ArrayList>
+		</s:columns>
+	</s:DataGrid>
+</olive:AbstractNodeRenderer>

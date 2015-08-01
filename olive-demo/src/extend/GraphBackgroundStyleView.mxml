@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="init(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>	
+	<![CDATA[
+		import com.iolive.topology.canvas.IGraph;
+		import com.iolive.topology.consts.GraphBackGroundType;
+		import com.iolive.topology.consts.ShapeBackGroundType;
+		
+		import mx.controls.Alert;
+		import mx.core.UIComponent;
+		import mx.events.CloseEvent;
+		import mx.events.FlexEvent;
+		import mx.events.ResizeEvent;
+		import mx.graphics.BitmapFill;
+		import mx.graphics.BitmapFillMode;
+		
+		import spark.primitives.supportClasses.FilledElement;
+		
+		private var _graph:IGraph;
+		
+		public function set graph(value:IGraph):void{
+			this._graph = value;
+		}
+		
+		public function get graph():IGraph{
+			return this._graph;
+		}
+		
+		protected function init(event:FlexEvent):void
+		{
+			grphicBackgroupTypeChange();
+		}
+		
+		private var img:Image;
+		public function grouphicImageChange(img:Image):void{
+			this.img = img;
+			grphicBackgroupTypeChange();
+		}
+		
+		/**
+		* 背景样式改变
+		*/ 
+		protected function grphicBackgroupTypeChange():void{
+		
+			switch(radioGroup.selectedValue)
+			{
+			case GraphBackGroundType.SING:
+			{
+				graph.setBackgroundColor(graphicbackgroundColor.selectedColor,graphicbackgroundAlpha.value);
+				break;
+			}
+			case GraphBackGroundType.GRADIENT:
+			{
+				var gradientBoxMatrix:Matrix = new Matrix();
+				gradientBoxMatrix.createGradientBox(graph.width, graph.height, 90,0,0);
+				graph.setBackgroundGradient(gradientDropList.selectedItem.value,[graphicbackgroundColorStart.selectedColor,graphicbackgroundColorEnd.selectedColor],
+				[graphicbackgroundAlphaStart.value,graphicbackgroundAlphaEnd.value],[graphicbackgroundRatioStart.value,graphicbackgroundRatioEnd.value],gradientBoxMatrix);
+				break;
+			}
+			case GraphBackGroundType.IMGFILL:
+			{
+				graph.setBackgroundImag(img == null ? bgImg1.bitmapData : img.bitmapData,imgFillDropList.selectedItem.value);
+				break;
+			}
+			case GraphBackGroundType.GRID:
+			{
+				graph.setBackgroundGrid(gridBackgroundColor.selectedColor,gridBackgroundAlpha.value,gridThicknessNumeric.value,gridItemColorPicker.selectedColor,
+				gridAlphaNumeric.value,gridItemSizeNumeric.value);
+				break;
+			}
+			
+			default:
+			{
+			break;
+			}
+			}
+		}
+		
+		
+	
+	]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radioGroup" change="grphicBackgroupTypeChange()" selectedValue="{GraphBackGroundType.SING}"/>
+	</fx:Declarations>
+	<s:VGroup width="100%" height="100%"  paddingLeft="5" paddingTop="5">
+		<s:Label text="画布背景" width="100"/>
+		<s:HGroup width="100%" gap="10">
+			<s:RadioButton label="单色" group="{radioGroup}" value="{GraphBackGroundType.SING}" selected="true"/>
+			<s:RadioButton label="渐变" group="{radioGroup}" value="{GraphBackGroundType.GRADIENT}" />
+			<s:RadioButton label="图片" group="{radioGroup}" value="{GraphBackGroundType.IMGFILL}" />
+			<s:RadioButton label="网格" group="{radioGroup}" value="{GraphBackGroundType.GRID}"/>
+		</s:HGroup>
+		
+		<s:VGroup width="100%" visible="{radioGroup.selectedValue == GraphBackGroundType.SING}" includeInLayout="{radioGroup.selectedValue == GraphBackGroundType.SING}">
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="画布背景色" width="100"/>
+				<mx:ColorPicker change="grphicBackgroupTypeChange()" id="graphicbackgroundColor" width="120" selectedColor="0xFFFFFF"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="画布背景透明度" width="100"/>
+				<s:NumericStepper minimum="0.1" maximum="1" stepSize="0.1" value="1" change="grphicBackgroupTypeChange()" id="graphicbackgroundAlpha" width="120"/>
+			</s:HGroup>
+		</s:VGroup>
+		<s:VGroup width="100%"  visible="{radioGroup.selectedValue == GraphBackGroundType.GRADIENT}" includeInLayout="{radioGroup.selectedValue == GraphBackGroundType.GRADIENT}">
+			<s:HGroup width="100%">
+				<s:Label text="渐变类型" width="100"/>
+				<s:DropDownList change="grphicBackgroupTypeChange()" selectedIndex="1" id="gradientDropList" width="120">
+					<s:dataProvider>
+						<s:ArrayList>
+							<fx:Object label="线形渐变" value="{ShapeBackGroundType.LINEAR}"/>
+							<fx:Object label="放射渐变" value="{ShapeBackGroundType.RADIAL}"/>
+						</s:ArrayList>
+					</s:dataProvider>
+				</s:DropDownList>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="开始颜色" width="100"/>
+				<mx:ColorPicker change="grphicBackgroupTypeChange()" id="graphicbackgroundColorStart" selectedColor="0x33FFFF" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="终止颜色" width="100"/>
+				<mx:ColorPicker change="grphicBackgroupTypeChange()" id="graphicbackgroundColorEnd" width="120"/>
+			</s:HGroup>
+			<s:Line width="100%"/>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="起始透明度" width="100"/>
+				<s:NumericStepper minimum="0.1" maximum="1" stepSize="0.1" value="0.7" change="grphicBackgroupTypeChange()" id="graphicbackgroundAlphaStart" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="结束透明度" width="100"/>
+				<s:NumericStepper minimum="0.1" maximum="1" stepSize="0.1" value="1" change="grphicBackgroupTypeChange()" id="graphicbackgroundAlphaEnd" width="120"/>
+			</s:HGroup>
+			<s:Line width="100%"/>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="起始分布比率" width="100"/>
+				<s:NumericStepper minimum="0" maximum="255" stepSize="10"  value="125"  change="grphicBackgroupTypeChange()" id="graphicbackgroundRatioStart" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="结束分布比率" width="100"/>
+				<s:NumericStepper minimum="0" maximum="255" stepSize="10"  value="255" change="grphicBackgroupTypeChange()" id="graphicbackgroundRatioEnd" width="120"/>
+			</s:HGroup>
+		</s:VGroup>
+		<s:VGroup width="100%"  visible="{radioGroup.selectedValue == GraphBackGroundType.IMGFILL}" includeInLayout="{radioGroup.selectedValue == GraphBackGroundType.IMGFILL}">
+			<s:TileGroup width="100%" height="100%" requestedColumnCount="4" requestedRowCount="2">
+				<s:Image source="assets/background/_bg1.png" width="60" height="60" id="bgImg1" click="grouphicImageChange(bgImg1)"/>
+				<s:Image source="assets/background/_bg2.png" width="60" height="60" id="bgImg2" click="grouphicImageChange(bgImg2)"/>
+				<s:Image source="assets/background/_bg3.png" width="60" height="60" id="bgImg3" click="grouphicImageChange(bgImg3)"/>
+				<s:Image source="assets/background/_bg4.png" width="60" height="60" id="bgImg4" click="grouphicImageChange(bgImg4)"/>
+				<s:Image source="assets/background/_bg5.png" width="60" height="60" id="bgImg5" click="grouphicImageChange(bgImg5)"/>
+				<s:Image source="assets/background/_bg6.png" width="60" height="60" id="bgImg6" click="grouphicImageChange(bgImg6)"/>
+				<s:Image source="assets/background/_bg7.png" width="60" height="60" id="bgImg7" click="grouphicImageChange(bgImg7)"/>
+				<s:Image source="assets/background/yahooTche.png" width="60" height="60" id="bgImg8" click="grouphicImageChange(bgImg8)"/>
+			</s:TileGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="渲染方式" width="100"/>
+				<s:DropDownList selectedIndex="1" id="imgFillDropList" change="grphicBackgroupTypeChange()" width="120">
+					<s:dataProvider>
+						<s:ArrayList>
+							<fx:Object label="原图大小" value="{BitmapFillMode.CLIP}"/>
+							<fx:Object label="重叠平铺" value="{BitmapFillMode.REPEAT}"/>
+							<fx:Object label="拉伸" value="{BitmapFillMode.SCALE}"/>
+						</s:ArrayList>
+					</s:dataProvider>
+				</s:DropDownList>
+			</s:HGroup>
+		</s:VGroup>	
+		<s:VGroup width="100%"  visible="{radioGroup.selectedValue == GraphBackGroundType.GRID}" includeInLayout="{radioGroup.selectedValue == GraphBackGroundType.GRID}">
+			<!--<toolbarClasses:HorLine width="100%"/>-->
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="背景颜色" width="100"/>
+				<mx:ColorPicker change="grphicBackgroupTypeChange()" id="gridBackgroundColor" selectedColor="0xFFFFFF" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="背景透明度" width="100"/>
+				<s:NumericStepper minimum="0" maximum="1" stepSize="0.1" value="1"  id="gridBackgroundAlpha"  change="grphicBackgroupTypeChange()" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="网格线颜色" width="100"/>
+				<mx:ColorPicker change="grphicBackgroupTypeChange()"  id="gridItemColorPicker" selectedColor="0xCCCCCC" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="网格线透明度" width="100"/>
+				<s:NumericStepper minimum="0" maximum="1" value="1"  stepSize="0.1" id="gridAlphaNumeric"  change="grphicBackgroupTypeChange()" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="网格线粗细" width="100"/>
+				<s:NumericStepper minimum="0" maximum="10"  stepSize="1" value="1"  id="gridThicknessNumeric"  change="grphicBackgroupTypeChange()" width="120"/>
+			</s:HGroup>
+			<s:HGroup width="100%" verticalAlign="middle">
+				<s:Label text="网格大小" width="100"/>
+				<s:NumericStepper minimum="10" maximum="100" value="30"  stepSize="10" id="gridItemSizeNumeric"  change="grphicBackgroupTypeChange()" width="120"/>
+			</s:HGroup>
+		</s:VGroup>
+	</s:VGroup>	
+</s:Group>

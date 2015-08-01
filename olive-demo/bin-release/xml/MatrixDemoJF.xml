@@ -1,0 +1,161 @@
+<?xml version="1.0" ?><graph><node id="a:00" text="encoder" tooltip="TAG" type="node" bounds="700,50,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<node id="a:01" text="encoder" tooltip="TAG" type="node" bounds="800,50,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:00-01" type="undirected" directed="false" tooltip="" source="a:00" destination="a:01" lineType="straightline"  flowTextFeild="2"/>
+<node id="a:02" text="encoder" tooltip="TAG" type="node" bounds="900,50,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:01-02" type="undirected" directed="false" tooltip="" source="a:01" destination="a:02" lineType="straightline"  flowTextFeild="3"/>
+<node id="a:03" text="encoder" tooltip="TAG" type="node" bounds="1000,50,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:02-03" type="undirected" directed="false" tooltip="" source="a:02" destination="a:03" lineType="straightline"  flowTextFeild="4"/>
+<node id="a:04" text="encoder" tooltip="TAG" type="node" bounds="1100,50,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:03-04" type="undirected" directed="false" tooltip="" source="a:03" destination="a:04" lineType="straightline"  flowTextFeild="5"/>
+ 
+ <node id="a:10" text="encoder" tooltip="TAG" type="node" bounds="450,100,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:00-10" type="undirected"  directed="false"  tooltip="" source="a:00" destination="a:10" lineType="straightline"  flowTextFeild="6"/>
+<node id="a:11" text="encoder" tooltip="TAG" type="node" bounds="550,100,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:10-11" type="undirected" directed="false" tooltip="" source="a:10" destination="a:11" lineType="straightline"  flowTextFeild="7"/>
+<arc id="a:01-11" type="undirected"  directed="false"  tooltip="" source="a:01" destination="a:11" lineType="straightline"  flowTextFeild="7"/>
+<node id="a:12" text="encoder" tooltip="TAG" type="node" bounds="650,100,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:11-12" type="undirected" directed="false" tooltip="" source="a:11" destination="a:12" lineType="straightline"  flowTextFeild="8"/>
+<arc id="a:02-12" type="undirected"  directed="false"  tooltip="" source="a:02" destination="a:12" lineType="straightline"  flowTextFeild="8"/>
+<node id="a:13" text="encoder" tooltip="TAG" type="node" bounds="750,100,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:12-13" type="undirected" directed="false" tooltip="" source="a:12" destination="a:13" lineType="straightline"  flowTextFeild="9"/>
+<arc id="a:03-13" type="undirected"  directed="false"  tooltip="" source="a:03" destination="a:13" lineType="straightline"  flowTextFeild="9"/>
+<node id="a:14" text="encoder" tooltip="TAG" type="node" bounds="850,100,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:13-14" type="undirected" directed="false" tooltip="" source="a:13" destination="a:14" lineType="straightline"  flowTextFeild="10"/>
+<arc id="a:04-14" type="undirected"  directed="false"  tooltip="" source="a:04" destination="a:14" lineType="straightline"  flowTextFeild="10"/>
+ 
+ <node id="a:20" text="encoder" tooltip="TAG" type="node" bounds="200,150,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:10-20" type="undirected"  directed="false"  tooltip="" source="a:10" destination="a:20" lineType="straightline"  flowTextFeild="11"/>
+<node id="a:21" text="encoder" tooltip="TAG" type="node" bounds="300,150,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:20-21" type="undirected" directed="false" tooltip="" source="a:20" destination="a:21" lineType="straightline"  flowTextFeild="12"/>
+<arc id="a:11-21" type="undirected"  directed="false"  tooltip="" source="a:11" destination="a:21" lineType="straightline"  flowTextFeild="12"/>
+<node id="a:22" text="encoder" tooltip="TAG" type="node" bounds="400,150,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:21-22" type="undirected" directed="false" tooltip="" source="a:21" destination="a:22" lineType="straightline"  flowTextFeild="13"/>
+<arc id="a:12-22" type="undirected"  directed="false"  tooltip="" source="a:12" destination="a:22" lineType="straightline"  flowTextFeild="13"/>
+<node id="a:23" text="encoder" tooltip="TAG" type="node" bounds="500,150,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:22-23" type="undirected" directed="false" tooltip="" source="a:22" destination="a:23" lineType="straightline"  flowTextFeild="14"/>
+<arc id="a:13-23" type="undirected"  directed="false"  tooltip="" source="a:13" destination="a:23" lineType="straightline"  flowTextFeild="14"/>
+<node id="a:24" text="encoder" tooltip="TAG" type="node" bounds="600,150,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="a:23-24" type="undirected" directed="false" tooltip="" source="a:23" destination="a:24" lineType="straightline"  flowTextFeild="15"/>
+<arc id="a:14-24" type="undirected"  directed="false"  tooltip="" source="a:14" destination="a:24" lineType="straightline"  flowTextFeild="15"/>
+ 
+ <node id="b:00" text="encoder" tooltip="TAG" type="node" bounds="700,200,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<node id="b:01" text="encoder" tooltip="TAG" type="node" bounds="800,200,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:00-01" type="undirected" directed="false" tooltip="" source="b:00" destination="b:01" lineType="straightline"  flowTextFeild="2"/>
+<node id="b:02" text="encoder" tooltip="TAG" type="node" bounds="900,200,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:01-02" type="undirected" directed="false" tooltip="" source="b:01" destination="b:02" lineType="straightline"  flowTextFeild="3"/>
+<node id="b:03" text="encoder" tooltip="TAG" type="node" bounds="1000,200,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:02-03" type="undirected" directed="false" tooltip="" source="b:02" destination="b:03" lineType="straightline"  flowTextFeild="4"/>
+<node id="b:04" text="encoder" tooltip="TAG" type="node" bounds="1100,200,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:03-04" type="undirected" directed="false" tooltip="" source="b:03" destination="b:04" lineType="straightline"  flowTextFeild="5"/>
+ 
+ <node id="b:10" text="encoder" tooltip="TAG" type="node" bounds="450,250,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:00-10" type="undirected"  directed="false"  tooltip="" source="b:00" destination="b:10" lineType="straightline"  flowTextFeild="6"/>
+<node id="b:11" text="encoder" tooltip="TAG" type="node" bounds="550,250,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:10-11" type="undirected" directed="false" tooltip="" source="b:10" destination="b:11" lineType="straightline"  flowTextFeild="7"/>
+<arc id="b:01-11" type="undirected"  directed="false"  tooltip="" source="b:01" destination="b:11" lineType="straightline"  flowTextFeild="7"/>
+<node id="b:12" text="encoder" tooltip="TAG" type="node" bounds="650,250,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:11-12" type="undirected" directed="false" tooltip="" source="b:11" destination="b:12" lineType="straightline"  flowTextFeild="8"/>
+<arc id="b:02-12" type="undirected"  directed="false"  tooltip="" source="b:02" destination="b:12" lineType="straightline"  flowTextFeild="8"/>
+<node id="b:13" text="encoder" tooltip="TAG" type="node" bounds="750,250,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:12-13" type="undirected" directed="false" tooltip="" source="b:12" destination="b:13" lineType="straightline"  flowTextFeild="9"/>
+<arc id="b:03-13" type="undirected"  directed="false"  tooltip="" source="b:03" destination="b:13" lineType="straightline"  flowTextFeild="9"/>
+<node id="b:14" text="encoder" tooltip="TAG" type="node" bounds="850,250,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:13-14" type="undirected" directed="false" tooltip="" source="b:13" destination="b:14" lineType="straightline"  flowTextFeild="10"/>
+<arc id="b:04-14" type="undirected"  directed="false"  tooltip="" source="b:04" destination="b:14" lineType="straightline"  flowTextFeild="10"/>
+ 
+ <node id="b:20" text="encoder" tooltip="TAG" type="node" bounds="200,300,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:10-20" type="undirected"  directed="false"  tooltip="" source="b:10" destination="b:20" lineType="straightline"  flowTextFeild="11"/>
+<node id="b:21" text="encoder" tooltip="TAG" type="node" bounds="300,300,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:20-21" type="undirected" directed="false" tooltip="" source="b:20" destination="b:21" lineType="straightline"  flowTextFeild="12"/>
+<arc id="b:11-21" type="undirected"  directed="false"  tooltip="" source="b:11" destination="b:21" lineType="straightline"  flowTextFeild="12"/>
+<node id="b:22" text="encoder" tooltip="TAG" type="node" bounds="400,300,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:21-22" type="undirected" directed="false" tooltip="" source="b:21" destination="b:22" lineType="straightline"  flowTextFeild="13"/>
+<arc id="b:12-22" type="undirected"  directed="false"  tooltip="" source="b:12" destination="b:22" lineType="straightline"  flowTextFeild="13"/>
+<node id="b:23" text="encoder" tooltip="TAG" type="node" bounds="500,300,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:22-23" type="undirected" directed="false" tooltip="" source="b:22" destination="b:23" lineType="straightline"  flowTextFeild="14"/>
+<arc id="b:13-23" type="undirected"  directed="false"  tooltip="" source="b:13" destination="b:23" lineType="straightline"  flowTextFeild="14"/>
+<node id="b:24" text="encoder" tooltip="TAG" type="node" bounds="600,300,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="b:23-24" type="undirected" directed="false" tooltip="" source="b:23" destination="b:24" lineType="straightline"  flowTextFeild="15"/>
+<arc id="b:14-24" type="undirected"  directed="false"  tooltip="" source="b:14" destination="b:24" lineType="straightline"  flowTextFeild="15"/>
+ 
+ <node id="c:00" text="encoder" tooltip="TAG" type="node" bounds="700,350,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<node id="c:01" text="encoder" tooltip="TAG" type="node" bounds="800,350,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:00-01" type="undirected" directed="false" tooltip="" source="c:00" destination="c:01" lineType="straightline"  flowTextFeild="2"/>
+<node id="c:02" text="encoder" tooltip="TAG" type="node" bounds="900,350,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:01-02" type="undirected" directed="false" tooltip="" source="c:01" destination="c:02" lineType="straightline"  flowTextFeild="3"/>
+<node id="c:03" text="encoder" tooltip="TAG" type="node" bounds="1000,350,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:02-03" type="undirected" directed="false" tooltip="" source="c:02" destination="c:03" lineType="straightline"  flowTextFeild="4"/>
+<node id="c:04" text="encoder" tooltip="TAG" type="node" bounds="1100,350,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:03-04" type="undirected" directed="false" tooltip="" source="c:03" destination="c:04" lineType="straightline"  flowTextFeild="5"/>
+ 
+ <node id="c:10" text="encoder" tooltip="TAG" type="node" bounds="450,400,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:00-10" type="undirected"  directed="false"  tooltip="" source="c:00" destination="c:10" lineType="straightline"  flowTextFeild="6"/>
+<node id="c:11" text="encoder" tooltip="TAG" type="node" bounds="550,400,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:10-11" type="undirected" directed="false" tooltip="" source="c:10" destination="c:11" lineType="straightline"  flowTextFeild="7"/>
+<arc id="c:01-11" type="undirected"  directed="false"  tooltip="" source="c:01" destination="c:11" lineType="straightline"  flowTextFeild="7"/>
+<node id="c:12" text="encoder" tooltip="TAG" type="node" bounds="650,400,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:11-12" type="undirected" directed="false" tooltip="" source="c:11" destination="c:12" lineType="straightline"  flowTextFeild="8"/>
+<arc id="c:02-12" type="undirected"  directed="false"  tooltip="" source="c:02" destination="c:12" lineType="straightline"  flowTextFeild="8"/>
+<node id="c:13" text="encoder" tooltip="TAG" type="node" bounds="750,400,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:12-13" type="undirected" directed="false" tooltip="" source="c:12" destination="c:13" lineType="straightline"  flowTextFeild="9"/>
+<arc id="c:03-13" type="undirected"  directed="false"  tooltip="" source="c:03" destination="c:13" lineType="straightline"  flowTextFeild="9"/>
+<node id="c:14" text="encoder" tooltip="TAG" type="node" bounds="850,400,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:13-14" type="undirected" directed="false" tooltip="" source="c:13" destination="c:14" lineType="straightline"  flowTextFeild="10"/>
+<arc id="c:04-14" type="undirected"  directed="false"  tooltip="" source="c:04" destination="c:14" lineType="straightline"  flowTextFeild="10"/>
+ 
+ <node id="c:20" text="encoder" tooltip="TAG" type="node" bounds="200,450,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:10-20" type="undirected"  directed="false"  tooltip="" source="c:10" destination="c:20" lineType="straightline"  flowTextFeild="11"/>
+<node id="c:21" text="encoder" tooltip="TAG" type="node" bounds="300,450,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:20-21" type="undirected" directed="false" tooltip="" source="c:20" destination="c:21" lineType="straightline"  flowTextFeild="12"/>
+<arc id="c:11-21" type="undirected"  directed="false"  tooltip="" source="c:11" destination="c:21" lineType="straightline"  flowTextFeild="12"/>
+<node id="c:22" text="encoder" tooltip="TAG" type="node" bounds="400,450,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:21-22" type="undirected" directed="false" tooltip="" source="c:21" destination="c:22" lineType="straightline"  flowTextFeild="13"/>
+<arc id="c:12-22" type="undirected"  directed="false"  tooltip="" source="c:12" destination="c:22" lineType="straightline"  flowTextFeild="13"/>
+<node id="c:23" text="encoder" tooltip="TAG" type="node" bounds="500,450,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:22-23" type="undirected" directed="false" tooltip="" source="c:22" destination="c:23" lineType="straightline"  flowTextFeild="14"/>
+<arc id="c:13-23" type="undirected"  directed="false"  tooltip="" source="c:13" destination="c:23" lineType="straightline"  flowTextFeild="14"/>
+<node id="c:24" text="encoder" tooltip="TAG" type="node" bounds="600,450,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="c:23-24" type="undirected" directed="false" tooltip="" source="c:23" destination="c:24" lineType="straightline"  flowTextFeild="15"/>
+<arc id="c:14-24" type="undirected"  directed="false"  tooltip="" source="c:14" destination="c:24" lineType="straightline"  flowTextFeild="15"/>
+ 
+ <node id="d:00" text="encoder" tooltip="TAG" type="node" bounds="700,500,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<node id="d:01" text="encoder" tooltip="TAG" type="node" bounds="800,500,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:00-01" type="undirected" directed="false" tooltip="" source="d:00" destination="d:01" lineType="straightline"  flowTextFeild="2"/>
+<node id="d:02" text="encoder" tooltip="TAG" type="node" bounds="900,500,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:01-02" type="undirected" directed="false" tooltip="" source="d:01" destination="d:02" lineType="straightline"  flowTextFeild="3"/>
+<node id="d:03" text="encoder" tooltip="TAG" type="node" bounds="1000,500,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:02-03" type="undirected" directed="false" tooltip="" source="d:02" destination="d:03" lineType="straightline"  flowTextFeild="4"/>
+<node id="d:04" text="encoder" tooltip="TAG" type="node" bounds="1100,500,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:03-04" type="undirected" directed="false" tooltip="" source="d:03" destination="d:04" lineType="straightline"  flowTextFeild="5"/>
+ 
+ <node id="d:10" text="encoder" tooltip="TAG" type="node" bounds="450,550,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:00-10" type="undirected"  directed="false"  tooltip="" source="d:00" destination="d:10" lineType="straightline"  flowTextFeild="6"/>
+<node id="d:11" text="encoder" tooltip="TAG" type="node" bounds="550,550,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:10-11" type="undirected" directed="false" tooltip="" source="d:10" destination="d:11" lineType="straightline"  flowTextFeild="7"/>
+<arc id="d:01-11" type="undirected"  directed="false"  tooltip="" source="d:01" destination="d:11" lineType="straightline"  flowTextFeild="7"/>
+<node id="d:12" text="encoder" tooltip="TAG" type="node" bounds="650,550,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:11-12" type="undirected" directed="false" tooltip="" source="d:11" destination="d:12" lineType="straightline"  flowTextFeild="8"/>
+<arc id="d:02-12" type="undirected"  directed="false"  tooltip="" source="d:02" destination="d:12" lineType="straightline"  flowTextFeild="8"/>
+<node id="d:13" text="encoder" tooltip="TAG" type="node" bounds="750,550,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:12-13" type="undirected" directed="false" tooltip="" source="d:12" destination="d:13" lineType="straightline"  flowTextFeild="9"/>
+<arc id="d:03-13" type="undirected"  directed="false"  tooltip="" source="d:03" destination="d:13" lineType="straightline"  flowTextFeild="9"/>
+<node id="d:14" text="encoder" tooltip="TAG" type="node" bounds="850,550,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:13-14" type="undirected" directed="false" tooltip="" source="d:13" destination="d:14" lineType="straightline"  flowTextFeild="10"/>
+<arc id="d:04-14" type="undirected"  directed="false"  tooltip="" source="d:04" destination="d:14" lineType="straightline"  flowTextFeild="10"/>
+ 
+ <node id="d:20" text="encoder" tooltip="TAG" type="node" bounds="200,600,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:10-20" type="undirected"  directed="false"  tooltip="" source="d:10" destination="d:20" lineType="straightline"  flowTextFeild="11"/>
+<node id="d:21" text="encoder" tooltip="TAG" type="node" bounds="300,600,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:20-21" type="undirected" directed="false" tooltip="" source="d:20" destination="d:21" lineType="straightline"  flowTextFeild="12"/>
+<arc id="d:11-21" type="undirected"  directed="false"  tooltip="" source="d:11" destination="d:21" lineType="straightline"  flowTextFeild="12"/>
+<node id="d:22" text="encoder" tooltip="TAG" type="node" bounds="400,600,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:21-22" type="undirected" directed="false" tooltip="" source="d:21" destination="d:22" lineType="straightline"  flowTextFeild="13"/>
+<arc id="d:12-22" type="undirected"  directed="false"  tooltip="" source="d:12" destination="d:22" lineType="straightline"  flowTextFeild="13"/>
+<node id="d:23" text="encoder" tooltip="TAG" type="node" bounds="500,600,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:22-23" type="undirected" directed="false" tooltip="" source="d:22" destination="d:23" lineType="straightline"  flowTextFeild="14"/>
+<arc id="d:13-23" type="undirected"  directed="false"  tooltip="" source="d:13" destination="d:23" lineType="straightline"  flowTextFeild="14"/>
+<node id="d:24" text="encoder" tooltip="TAG" type="node" bounds="600,600,27.0,26.0" icon="assets/topo/oss/U_D.png"/>
+<arc id="d:23-24" type="undirected" directed="false" tooltip="" source="d:23" destination="d:24" lineType="straightline"  flowTextFeild="15"/>
+<arc id="d:14-24" type="undirected"  directed="false"  tooltip="" source="d:14" destination="d:24" lineType="straightline"  flowTextFeild="15"/>
+ 
+ </graph>

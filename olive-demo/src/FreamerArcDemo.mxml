@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--******************************************************************************************
+自定义线段复杂样式的例子，见线段渲染器:FreamerArcRenderer
+**********************************************************************************************-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:olive="Library://com.olive.core/flex/olive"
+			   creationComplete="init()" pageTitle="自定义线段复杂样式的例子"
+			   viewSourceURL="srcview/index.html">
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphNodeEvent;
+			import com.iolive.topology.events.GraphXMLModelEvent;
+			import com.iolive.topology.model.DefaultGraphArc;
+			import com.iolive.topology.model.DefaultGraphModel;
+			import com.iolive.topology.model.DefaultGraphNode;
+			import com.iolive.topology.model.IGraphNode;
+			import com.iolive.topology.renderers.IColorProvider;
+			import com.iolive.topology.renderers.ImageNodeRenderer;
+			import com.iolive.topology.renderers.SimpleLabelPlusIconNodeRenderer;
+			import com.iolive.topology.utils.Uuid;
+			
+			import extend.renderer.arc.FreamerArcRenderer;
+			
+			private var model:DefaultGraphModel;
+			
+			private function init():void {
+				model = new DefaultGraphModel();
+				var aNode:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"a","a",{name:"a",icon:"assets/topo/internet.png"});
+				aNode.layoutX = aNode.layoutY = 100;
+				var bNode:DefaultGraphNode = new DefaultGraphNode(new Uuid().toString(),"b","b",{name:"b",icon:"assets/topo/satelite.png"});
+				bNode.layoutX = bNode.layoutY = 500;
+				model.addNodes([aNode,bNode]);
+				var arc:DefaultGraphArc = new DefaultGraphArc(new Uuid().toString(),aNode,bNode,"arc");
+				model.addArc(arc);
+				graph.model = model;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	<s:VGroup width="100%" height="100%" gap="0">
+		<olive:DefaultToolBar graph="{graph}" width="100%"/>
+		<olive:OliveGraph id="graph" height="100%" width="100%" 
+						  arcRenderer="{new FreamerArcRenderer()}"
+						  nodeRenderer="{new ImageNodeRenderer()}"/>
+		<olive:SearchBar graph="{graph}" width="100%"/>
+	</s:VGroup>
+</s:Application>

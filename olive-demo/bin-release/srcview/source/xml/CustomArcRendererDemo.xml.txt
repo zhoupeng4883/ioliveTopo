@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<graph>
+  <node id="1" text="云" tooltip="云" type="入口"  icon="assets/topo/cloud.gif" alarm_level="2" alarm_num="3" labelposition="top"/>
+  <node id="2" text="internet网关" tooltip="internet网关" type="入口"  icon="assets/topo/internet.png" alarm_level="2"  alarm_num="3" labelposition="left"/>
+  <node id="3" text="卫星电话发射器" tooltip="卫星电话发射器" type="入口"  icon="assets/topo/satelite.png" alarm_level="2"  alarm_num="2" labelposition="right"/>
+  <node id="4" text="手机" tooltip="手机" type="WIFI节点"  icon="assets/topo/phone.png" alarm_level="2" alarm_num="3" />
+  <node id="5" text="PC" tooltip="PC" type="办公节点"  icon="assets/topo/pc.png" alarm_level="2"  alarm_num="1"/>
+  
+  <node id="16" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="2" alarm_num="4"/>
+  <node id="17" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="2" alarm_num="3"/>
+  <node id="18" text="座机" tooltip="座机" type="通信节点"  icon="assets/topo/call.png" alarm_level="3" alarm_num="8"/>
+  
+  <arc id="100" type="连接" tooltip="" source="1" destination="2" selected="true" directed="false" lineType="straightline" flowTextFeild="1"  alarm_num="3" />
+  <arc id="101" type="连接" tooltip="" source="1" destination="3" lineType="CIRCULAR"  flowTextFeild="2" color="0x121212" dataFlow="true"  />
+  <arc id="102" type="线路" tooltip="" source="2" destination="4" lineType="DirectedBalloon"  flowTextFeild="3"   />
+  <arc id="103" type="线路" tooltip="" source="2" destination="5" lineType="BROKEN_1"  flowTextFeild="4"   />
+  
+  <arc id="109" type="线路" tooltip="" source="3" destination="16" lineType="BROKEN_1"  flowTextFeild="10"   />
+  <arc id="110" type="线路" tooltip="" source="5" destination="17" lineType="CIRCULAR"  flowTextFeild="11"   />
+  <arc id="111" type="线路" tooltip="" source="5" destination="18" lineType="BROKEN_1"  flowTextFeild="111"   />
+
+</graph>
