@@ -8,7 +8,7 @@
 			   xmlns:olive="Library://com.olive.core/flex/olive"
 			   xmlns:renderers="com.iolive.topology.renderers.*"
 			   xmlns:designs="designs.*"
-			   creationComplete="init()" viewSourceURL="srcview/index.html">
+			   creationComplete="init()">
 	<fx:Script>
 		<![CDATA[
 			import com.iolive.topology.events.GraphXMLModelEvent;
