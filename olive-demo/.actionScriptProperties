@@ -14,9 +14,8 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="CustomArrowDemo.mxml"/>
-    <application path="DesignDemo.mxml"/>
     <application path="CircleLayoutAlgorithmDemo.mxml"/>
+    <application path="CustomArrowDemo.mxml"/>
     <application path="ArcDoubleArrowHeandDemo.mxml"/>
     <application path="RemoteObjectDemo.mxml"/>
     <application path="ArcCircleDemo.mxml"/>
@@ -34,40 +33,44 @@
     <application path="AlarmRenderer.mxml"/>
     <application path="GraphBackgroundStyle.mxml"/>
     <application path="OuterGroupRendererDemo.mxml"/>
-    <application path="DataFlowDemo.mxml"/>
+    <application path="TestApp.mxml"/>
     <application path="EagleEyeDemo.mxml"/>
+    <application path="DataFlowDemo.mxml"/>
     <application path="PSTNDemo.mxml"/>
     <application path="CustomToolBarDemo.mxml"/>
     <application path="NodeGroupDemo.mxml"/>
     <application path="NodeToolTipDemo.mxml"/>
     <application path="MatrixDemo.mxml"/>
-    <application path="MatrixDemo4Net.mxml"/>
     <application path="MatrixDemoStar.mxml"/>
+    <application path="MatrixDemo4Net.mxml"/>
+    <application path="DesignDemo.mxml"/>
     <application path="NodeFilterDemo.mxml"/>
     <application path="ArcArrowHeadDemo.mxml"/>
-    <application path="PointsArcDemo.mxml"/>
     <application path="MatrixDemoJF.mxml"/>
+    <application path="PointsArcDemo.mxml"/>
     <application path="DashedArcDemo.mxml"/>
-    <application path="GridLayoutAlgorithmDemo.mxml"/>
     <application path="ArcArrowHead4ArcEndDemo.mxml"/>
+    <application path="GridLayoutAlgorithmDemo.mxml"/>
     <application path="LabelIconDemo.mxml"/>
-    <application path="LabelDemo.mxml"/>
     <application path="JavaHttpServiceDemo.mxml"/>
+    <application path="LabelDemo.mxml"/>
     <application path="MatrixDemoSpider.mxml"/>
     <application path="RightMenuDemo.mxml"/>
-    <application path="PointsCurveArcDemo.mxml"/>
     <application path="LabelPlusIconDemo.mxml"/>
+    <application path="PointsCurveArcDemo.mxml"/>
     <application path="MatrixDemoSun.mxml"/>
     <application path="IconDemo.mxml"/>
+    <application path="YaaoSDCapacityAnalysis.mxml"/>
     <application path="ExportXMLDemo.mxml"/>
     <application path="LogicTableDemo.mxml"/>
     <application path="ArcBrokenLineDemo.mxml"/>
     <application path="JsonDemo.mxml"/>
     <application path="GraphBackGroundMap.mxml"/>
     <application path="CustomNodeToolTipDemo.mxml"/>
-    <application path="SDCapacityAnalysis.mxml"/>
   </applications>
-  <modules/>
+  <modules>
+    <module application="src/CustomArrowDemo.mxml" destPath="TestModule.swf" optimize="true" sourcePath="src/TestModule.mxml"/>
+  </modules>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>

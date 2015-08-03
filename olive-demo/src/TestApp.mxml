@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%" 
+			   creationComplete="init()"
+			   >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Style source="olive.css"/>
+	<fx:Style source="defaults.css"/>
+	
+	<s:ModuleLoader id="ml" width="100%" height="100%"/>
+	<fx:Script>
+		<![CDATA[
+			import com.iolive.topology.events.GraphXMLModelEvent;
+//			import com.iolive.topology.model.DefaultGraphArc;
+//			import com.iolive.topology.model.DefaultGraphNode;
+//			import com.iolive.topology.model.IGraphArc;
+//			import com.iolive.topology.model.IGraphNode;
+//			import com.iolive.topology.renderers.AbstractNodeRenderer;AbstractNodeRenderer
+//			import com.iolive.topology.renderers.INodeRenderer;INodeRenderer
+//			import com.iolive.topology.renderers.ImageNodeRenderer;ImageNodeRenderer
+//			import com.iolive.topology.utils.Utils;
+			
+//			import extend.renderer.AlarmNodeRenderer;AlarmNodeRenderer
+			
+//			import flash.utils.setInterval;
+			
+//			import sample.SimpleXmlGraphModel;
+			protected function init():void{
+				ml.loadModule("TestModule.swf");
+			}
+		]]>
+	</fx:Script>
+</s:Application>

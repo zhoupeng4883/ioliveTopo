@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" 
 			   minWidth="955" minHeight="600"
-			   xmlns:olive="Library://com.olive.core/flex/olive" creationComplete="init('xml/IconDemo.xml')">
+			   xmlns:olive="Library://com.olive.core/flex/olive" creationComplete="init('assets/xml/IconDemo.xml')">
 	<fx:Script>
 		<![CDATA[
 			import com.iolive.topology.events.GraphArcEvent;
